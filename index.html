@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2026 Singapore & F1 Grand Prix Itinerary</title>
+  <style>
+    :root {
+      --primary: #d32f2f;
+      --primary-dark: #b71c1c;
+      --accent: #ffb300;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --timeline-line: #cbd5e1;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans TC", sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding-bottom: 60px;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      color: #fff;
+      padding: 40px 20px 30px;
+      text-align: center;
+      position: relative;
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+
+    header p {
+      color: #94a3b8;
+      font-size: 0.95rem;
+    }
+
+    .badge-f1 {
+      display: inline-block;
+      background-color: var(--primary);
+      color: #fff;
+      font-size: 0.8rem;
+      font-weight: bold;
+      padding: 4px 10px;
+      border-radius: 999px;
+      margin-top: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    /* 日期導航 Tabs */
+    .tabs-wrapper {
+      position: sticky;
+      top: 0;
+      background: rgba(248, 250, 252, 0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 24px;
+    }
+
+    .tabs {
+      display: flex;
+      overflow-x: auto;
+      white-space: nowrap;
+      padding: 12px 0;
+      gap: 10px;
+      scrollbar-width: none;
+    }
+
+    .tabs::-webkit-scrollbar {
+      display: none;
+    }
+
+    .tab-btn {
+      padding: 8px 18px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: #fff;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .tab-btn.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+      box-shadow: 0 2px 8px rgba(211, 47, 47, 0.3);
+    }
+
+    /* 時間軸卡片結構 */
+    .timeline {
+      position: relative;
+      padding-left: 28px;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 8px;
+      top: 15px;
+      bottom: 20px;
+      width: 2px;
+      background: var(--timeline-line);
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 24px;
+    }
+
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: -28px;
+      top: 8px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--card-bg);
+      border: 3px solid var(--primary);
+      box-sizing: border-box;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      padding: 18px 20px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+    }
+
+    .card-time {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--primary);
+      background: #fee2e2;
+      padding: 2px 8px;
+      border-radius: 6px;
+      margin-bottom: 8px;
+    }
+
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .card-content {
+      font-size: 0.95rem;
+      color: #334155;
+    }
+
+    .card-content ul {
+      list-style-type: none;
+      margin-top: 6px;
+    }
+
+    .card-content li {
+      position: relative;
+      padding-left: 18px;
+      margin-bottom: 6px;
+    }
+
+    .card-content li::before {
+      content: "•";
+      position: absolute;
+      left: 4px;
+      color: var(--primary);
+      font-weight: bold;
+    }
+
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .tag {
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: #f1f5f9;
+      color: #475569;
+      font-weight: 500;
+    }
+
+    .tag.highlight {
+      background: #fef3c7;
+      color: #92400e;
+      font-weight: 600;
+    }
+
+    .notice-box {
+      margin-top: 12px;
+      background: #eff6ff;
+      border-left: 3px solid #3b82f6;
+      padding: 10px 14px;
+      font-size: 0.85rem;
+      color: #1e40af;
+      border-radius: 0 8px 8px 0;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🇸🇬 新加坡 ＆ F1 賽車之旅</h1>
+    <p>2026/10/08 - 10/12 • 5 Days 4 Nights</p>
+    <div class="badge-f1">F1 Singapore GP • Skyline Grandstand</div>
+  </header>
+
+  <div class="tabs-wrapper">
+    <div class="container">
+      <div class="tabs">
+        <button class="tab-btn active">10/8 (三) Day 1</button>
+        <button class="tab-btn">10/9 (四) Day 2</button>
+        <button class="tab-btn">10/10 (五) Day 3</button>
+        <button class="tab-btn">10/11 (六) Day 4</button>
+        <button class="tab-btn">10/12 (日) Day 5</button>
+      </div>
+    </div>
+  </div>
+
+  <main class="container">
+    <div class="timeline">
+
+      <!-- Step 1 -->
+      <div class="timeline-item">
+        <div class="card">
+          <span class="card-time">09:25 - 13:55</span>
+          <h2 class="card-title">✈️ 啟程飛往新加坡</h2>
+          <div class="card-content">
+            <p><strong>航班：</strong>長榮航空 BR215（桃園 T2 ➔ 樟宜 T3）</p>
+            <ul>
+              <li>13:55 降落樟宜機場第三航廈，通關並提領行李。</li>
+              <li>開啟 eSIM / 漫遊網路，準備出發探索星耀樟宜！</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="timeline-item">
+        <div class="card">
+          <span class="card-time">14:40 - 15:00</span>
+          <h2 class="card-title">📸 Skytrain 瀑布絕佳機位</h2>
+          <div class="card-content">
+            <ul>
+              <li>從 T3 搭乘接駁輕軌 <strong>Skytrain 往 T2</strong>。</li>
+              <li><strong>關鍵技巧：</strong>站在<strong>車廂右側</strong>，列車穿過 Jewel 時能以高空視野直擊「雨漩渦室內瀑布」。</li>
+              <li>抵達 T2 後依指標走冷氣連通道步行直通星耀樟宜（Jewel）。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="timeline-item">
+        <div class="card">
+          <span class="card-time">15:00 - 17:00</span>
+          <h2 class="card-title">💎 星耀樟宜放鬆慢逛 ＆ 寶可夢中心</h2>
+          <div class="card-content">
+            <ul>
+              <li><strong>寄放大行李：</strong>先到 Jewel 1 樓的 Baggage Storage 寄存行李，兩手空空最輕鬆。</li>
+              <li><strong>瀑布拍照：</strong>在資生堂森林谷與 40 米高的雨漩渦打卡合照。</li>
+              <li><strong>重點必訪：</strong>直奔 <strong>4 樓 Pokémon Center Singapore</strong>，入手新加坡限定機長/空服員皮卡丘！</li>
+            </ul>
+
+            <div class="tag-list">
+              <span class="tag highlight">必逛：Pokemon Center (4F)</span>
+              <span class="tag">松發肉骨茶 (B2)</span>
+              <span class="tag">Shake Shack (2F)</span>
+              <span class="tag">%Arabica (1F)</span>
+              <span class="tag">Mr Coconut (B2)</span>
+              <span class="tag">亞坤咖椰吐司 (1F)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="timeline-item">
+        <div class="card">
+          <span class="card-time">17:00 - 18:00</span>
+          <h2 class="card-title">🚕 前往飯店：Village Hotel Bugis</h2>
+          <div class="card-content">
+            <p>領回行李後，依當下體力選擇交通方式：</p>
+            <ul>
+              <li><strong>計程車 / Grab（推薦）：</strong>車程約 25–30 分鐘，車資約 25–45 新幣，免轉乘直達飯店門口。</li>
+              <li><strong>地鐵 MRT：</strong>搭綠線（East West Line）至<strong>丹那美拉站（Tanah Merah）</strong>，月台採「川字雙邊開門」，同台轉乘往 Tuas Link 方向至 <strong>Bugis 站（EW12）</strong>，步行 5 分鐘抵達。</li>
+            </ul>
+          </div>
+          <div class="notice-box">
+            🏨 <strong>住宿：</strong>Village Hotel Bugis (390 Victoria St)<br>
+            鄰近武吉士地鐵站，過馬路就是甘榜格南阿拉伯區！
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 5 -->
+      <div class="timeline-item">
+        <div class="card">
+          <span class="card-time">18:30 - 20:00</span>
+          <h2 class="card-title">🍽️ 甘榜格南特色在地晚餐</h2>
+          <div class="card-content">
+            <ul>
+              <li><strong>百年老店 Singapore Zam Zam：</strong>就在蘇丹回教堂正對面，必點現煎酥脆的招牌「印度牛肉/雞肉餡餅（Murtabak）」配濃咖哩醬，搭杯香濃冰拉茶。</li>
+              <li><strong>中東烤肉風味：</strong>巴梭拉街週邊炭烤肉串（Kebab）與熱騰騰扁麵包。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 6 -->
+      <div class="timeline-item">
+        <div class="card">
+          <span class="card-time">20:00 - 21:30</span>
+          <h2 class="card-title">🕌 阿拉伯區精華夜遊三部曲</h2>
+          <div class="card-content">
+            <ul>
+              <li><strong>第 1 站｜蘇丹回教堂（Sultan Mosque）：</strong>欣賞打上金黃色暖光的巨大金色圓頂，棕櫚大道前拍攝明信片夜景。</li>
+              <li><strong>第 2 站｜哈芝巷（Haji Lane）：</strong>穿梭色彩繽紛的巨幅塗鴉彩繪牆，感受露天酒吧音樂與特色選物小店的潮流氛圍。</li>
+              <li><strong>第 3 站｜峇里巷（Bali Lane）：</strong>步調較悠閒的巷弄，適合找間義式手工冰淇淋（Gelato）或文青咖啡店坐下來吃甜點歇腳。</li>
+            </ul>
+            <p style="margin-top: 10px; font-size: 0.9rem; color: #64748b;">
+              ✨ 散步完畢步行 3 分鐘即可回到飯店，早點休息為明天的行程充電！
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <p>Have an amazing trip to Singapore! 🏎️💨</p>
+  </footer>
+
+</body>
+</html>
