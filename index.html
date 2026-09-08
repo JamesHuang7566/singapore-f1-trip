@@ -162,12 +162,28 @@
       box-sizing: border-box;
     }
 
+    .timeline-item.placeholder::before {
+      border-color: #94a3b8;
+      background: #e2e8f0;
+    }
+
     .card {
       background: var(--card-bg);
       border-radius: 12px;
       border: 1px solid var(--border);
       padding: 16px 18px;
       box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+    }
+
+    .card.f1-card {
+      border-left: 4px solid var(--primary);
+      background: #fffafa;
+    }
+
+    .card.empty-slot {
+      border: 2px dashed #cbd5e1;
+      background: transparent;
+      box-shadow: none;
     }
 
     .card-time {
@@ -179,6 +195,11 @@
       padding: 2px 8px;
       border-radius: 6px;
       margin-bottom: 8px;
+    }
+
+    .card-time.f1-badge {
+      background: var(--primary);
+      color: #fff;
     }
 
     .card-title {
@@ -267,18 +288,18 @@
   <div class="tabs-wrapper">
     <div class="container">
       <div class="tabs">
-        <button class="tab-btn active" onclick="switchDay(1)">10/8 (三) Day 1</button>
-        <button class="tab-btn" onclick="switchDay(2)">10/9 (四) Day 2</button>
-        <button class="tab-btn" onclick="switchDay(3)">10/10 (五) Day 3</button>
-        <button class="tab-btn" onclick="switchDay(4)">10/11 (六) Day 4</button>
-        <button class="tab-btn" onclick="switchDay(5)">10/12 (日) Day 5</button>
+        <button class="tab-btn active" onclick="switchDay(1)">10/8 (四) Day 1</button>
+        <button class="tab-btn" onclick="switchDay(2)">10/9 (五) Day 2</button>
+        <button class="tab-btn" onclick="switchDay(3)">10/10 (六) Day 3</button>
+        <button class="tab-btn" onclick="switchDay(4)">10/11 (日) Day 4</button>
+        <button class="tab-btn" onclick="switchDay(5)">10/12 (一) Day 5</button>
       </div>
     </div>
   </div>
 
   <main class="container">
 
-    <!-- ==================== DAY 1 ==================== -->
+    <!-- ==================== DAY 1 (10/8 週四) ==================== -->
     <div class="day-content active" id="day-1">
       <div class="timeline">
 
@@ -380,88 +401,93 @@
       </div>
     </div>
 
-    <!-- ==================== DAY 2 ==================== -->
+    <!-- ==================== DAY 2 (10/9 週五) ==================== -->
     <div class="day-content" id="day-2">
       <div class="timeline">
-        <div class="timeline-item">
-          <div class="card">
-            <span class="card-time">09:00 - 12:00</span>
-            <h2 class="card-title">☕ 傳統南洋早餐 ＆ 魚尾獅公園打卡</h2>
+        <div class="timeline-item placeholder">
+          <div class="card empty-slot">
+            <span class="card-time">日間時段</span>
+            <h2 class="card-title">🗺️ 日間觀光行程（待討論規劃）</h2>
             <div class="card-content">
-              <p>規劃中：亞坤咖椰吐司半熟蛋、魚尾獅噴水借位合照...</p>
+              <p style="color: #94a3b8;">留白保留，待後續安排景點與美食...</p>
             </div>
           </div>
         </div>
+
         <div class="timeline-item">
-          <div class="card">
-            <span class="card-time">12:00 - 17:00</span>
-            <h2 class="card-title">🍲 松發肉骨茶 ＆ 濱海灣花園冷室</h2>
+          <div class="card f1-card">
+            <span class="card-time f1-badge">F1 官方賽程</span>
+            <h2 class="card-title">🏎️ F1 自由練習賽 Free Practice</h2>
             <div class="card-content">
-              <p>規劃中：白胡椒肉骨茶無限續湯、雲霧林室內高空瀑布避暑...</p>
-            </div>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="card">
-            <span class="card-time">17:30 之後</span>
-            <h2 class="card-title">🏎️ F1 Free Practice 練習賽 / 金沙夜景</h2>
-            <div class="card-content">
-              <p>規劃中：進場體驗摩天輪 or 水岸浪漫晚餐散步...</p>
+              <ul>
+                <li><strong>賽事：</strong>Free Practice 自由練習賽（預計傍晚至夜間進行）。</li>
+                <li><strong>票券：</strong>Skyline Grandstand (Access All Zones)。</li>
+                <li><strong>備註：</strong>此日可視日間行程節奏自由決定是否進場。</li>
+              </ul>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ==================== DAY 3 ==================== -->
+    <!-- ==================== DAY 3 (10/10 週六) ==================== -->
     <div class="day-content" id="day-3">
       <div class="timeline">
-        <div class="timeline-item">
-          <div class="card">
-            <span class="card-time">09:30 - 13:30</span>
-            <h2 class="card-title">🏮 牛車水文化巡禮 ＆ 麥士威天天海南雞飯</h2>
+        <div class="timeline-item placeholder">
+          <div class="card empty-slot">
+            <span class="card-time">日間時段</span>
+            <h2 class="card-title">🗺️ 日間觀光行程（待討論規劃）</h2>
             <div class="card-content">
-              <p>規劃中：佛牙寺參觀、品嚐知名米其林推薦海南雞飯...</p>
+              <p style="color: #94a3b8;">留白保留，待後續安排景點與美食...</p>
             </div>
           </div>
         </div>
+
         <div class="timeline-item">
-          <div class="card">
-            <span class="card-time">16:00 - 23:00</span>
-            <h2 class="card-title">🏁 F1 排位賽 Qualifying ＆ 賽道演唱會</h2>
+          <div class="card f1-card">
+            <span class="card-time f1-badge">F1 官方賽程</span>
+            <h2 class="card-title">🏁 F1 排位賽 Qualifying</h2>
             <div class="card-content">
-              <p>規劃中：Skyline Grandstand 觀戰桿位爭奪戰、免費搭摩天輪看夜景...</p>
+              <ul>
+                <li><strong>賽事：</strong>Qualifying 排位賽（決定週日正賽桿位起跑順序）。</li>
+                <li><strong>看台：</strong>Skyline Grandstand（近距離見證最後彎角與衝刺段）。</li>
+                <li><strong>場內福利：</strong>持該區票券可免費排隊搭乘 Zone 1 新加坡摩天輪。</li>
+              </ul>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ==================== DAY 4 ==================== -->
+    <!-- ==================== DAY 4 (10/11 週日) ==================== -->
     <div class="day-content" id="day-4">
       <div class="timeline">
-        <div class="timeline-item">
-          <div class="card">
-            <span class="card-time">10:00 - 14:00</span>
-            <h2 class="card-title">🥞 武吉士商圈悠閒早午餐 ＆ 休息蓄力</h2>
+        <div class="timeline-item placeholder">
+          <div class="card empty-slot">
+            <span class="card-time">日間時段</span>
+            <h2 class="card-title">🗺️ 日間觀光行程（待討論規劃）</h2>
             <div class="card-content">
-              <p>規劃中：早午餐、採買紀念品、回房午休備戰晚間正賽...</p>
+              <p style="color: #94a3b8;">留白保留，待後續安排景點與美食...</p>
             </div>
           </div>
         </div>
+
         <div class="timeline-item">
-          <div class="card">
-            <span class="card-time">16:00 - 23:30</span>
-            <h2 class="card-title">🏆 F1 正賽高潮 Race Day ＆ 賽道煙火</h2>
+          <div class="card f1-card">
+            <span class="card-time f1-badge">F1 官方賽程</span>
+            <h2 class="card-title">🏆 F1 新加坡大獎賽 正賽 Race Day</h2>
             <div class="card-content">
-              <p>規劃中：正賽起跑、維修區攻防戰、頒獎煙火秀、賽道巡禮 Track Invasion...</p>
+              <ul>
+                <li><strong>賽事：</strong>Grand Prix 正賽決賽（夜間起跑）。</li>
+                <li><strong>重頭戲：</strong>車手巡遊 Drivers' Parade、正賽起跑、頒獎典禮與賽後煙火秀。</li>
+              </ul>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ==================== DAY 5 ==================== -->
+    <!-- ==================== DAY 5 (10/12 週一) ==================== -->
     <div class="day-content" id="day-5">
       <div class="timeline">
 
@@ -557,7 +583,7 @@
         activeContent.classList.add('active');
       }
 
-      // 讓點擊的按鈕自動捲動到可視範圍（針對手機橫向捲動）
+      // 讓點擊的按鈕自動捲動到可視範圍
       buttons[dayNum - 1].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
     }
   </script>
