@@ -34,29 +34,29 @@
     header {
       background: linear-gradient(135deg, #1e293b, #0f172a);
       color: #fff;
-      padding: 40px 20px 30px;
+      padding: 35px 20px 25px;
       text-align: center;
       position: relative;
     }
 
     header h1 {
-      font-size: 1.8rem;
+      font-size: 1.7rem;
       letter-spacing: 1px;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     header p {
       color: #94a3b8;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
     }
 
     .badge-f1 {
       display: inline-block;
       background-color: var(--primary);
       color: #fff;
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       font-weight: bold;
-      padding: 4px 10px;
+      padding: 3px 10px;
       border-radius: 999px;
       margin-top: 10px;
       text-transform: uppercase;
@@ -94,15 +94,16 @@
     }
 
     .tab-btn {
-      padding: 8px 18px;
+      padding: 8px 16px;
       border: 1px solid var(--border);
       border-radius: 20px;
       background: #fff;
       color: var(--text-muted);
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
     }
 
     .tab-btn.active {
@@ -110,6 +111,21 @@
       color: #fff;
       border-color: var(--primary);
       box-shadow: 0 2px 8px rgba(211, 47, 47, 0.3);
+    }
+
+    /* 天數容器隱藏與顯示 */
+    .day-content {
+      display: none;
+      animation: fadeIn 0.25s ease-in-out;
+    }
+
+    .day-content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     /* 時間軸卡片結構 */
@@ -130,7 +146,7 @@
 
     .timeline-item {
       position: relative;
-      margin-bottom: 24px;
+      margin-bottom: 22px;
     }
 
     .timeline-item::before {
@@ -150,13 +166,13 @@
       background: var(--card-bg);
       border-radius: 12px;
       border: 1px solid var(--border);
-      padding: 18px 20px;
+      padding: 16px 18px;
       box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
     }
 
     .card-time {
       display: inline-block;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 700;
       color: var(--primary);
       background: #fee2e2;
@@ -166,7 +182,7 @@
     }
 
     .card-title {
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       font-weight: 700;
       color: var(--text);
       margin-bottom: 8px;
@@ -176,7 +192,7 @@
     }
 
     .card-content {
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       color: #334155;
     }
 
@@ -231,17 +247,6 @@
       border-radius: 0 8px 8px 0;
     }
 
-    .day-divider {
-      margin: 40px 0 24px -28px;
-      padding: 8px 16px;
-      background: #e2e8f0;
-      color: #334155;
-      font-weight: bold;
-      border-radius: 6px;
-      display: inline-block;
-      font-size: 0.9rem;
-    }
-
     footer {
       text-align: center;
       margin-top: 40px;
@@ -258,202 +263,304 @@
     <div class="badge-f1">F1 Singapore GP • Skyline Grandstand</div>
   </header>
 
+  <!-- 導航選單 (Tabs) -->
   <div class="tabs-wrapper">
     <div class="container">
       <div class="tabs">
-        <button class="tab-btn active">10/8 (三) Day 1</button>
-        <button class="tab-btn">10/9 (四) Day 2</button>
-        <button class="tab-btn">10/10 (五) Day 3</button>
-        <button class="tab-btn">10/11 (六) Day 4</button>
-        <button class="tab-btn">10/12 (日) Day 5</button>
+        <button class="tab-btn active" onclick="switchDay(1)">10/8 (三) Day 1</button>
+        <button class="tab-btn" onclick="switchDay(2)">10/9 (四) Day 2</button>
+        <button class="tab-btn" onclick="switchDay(3)">10/10 (五) Day 3</button>
+        <button class="tab-btn" onclick="switchDay(4)">10/11 (六) Day 4</button>
+        <button class="tab-btn" onclick="switchDay(5)">10/12 (日) Day 5</button>
       </div>
     </div>
   </div>
 
   <main class="container">
-    <div class="timeline">
 
-      <!-- ==================== DAY 1 ==================== -->
-      <div class="day-divider">🗓️ 10/8 (三) Day 1：抵達與星耀樟宜探索</div>
+    <!-- ==================== DAY 1 ==================== -->
+    <div class="day-content active" id="day-1">
+      <div class="timeline">
 
-      <!-- Step 1 -->
-      <div class="timeline-item">
-        <div class="card">
-          <span class="card-time">09:25 - 13:55</span>
-          <h2 class="card-title">✈️ 啟程飛往新加坡</h2>
-          <div class="card-content">
-            <p><strong>航班：</strong>長榮航空 BR215（桃園 T2 ➔ 樟宜 T3）</p>
-            <ul>
-              <li>13:55 降落樟宜機場第三航廈，通關並提領行李。</li>
-              <li>開啟 eSIM / 漫遊網路，準備出發探索星耀樟宜！</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <!-- Step 2 -->
-      <div class="timeline-item">
-        <div class="card">
-          <span class="card-time">14:40 - 15:00</span>
-          <h2 class="card-title">📸 Skytrain 瀑布絕佳機位</h2>
-          <div class="card-content">
-            <ul>
-              <li>從 T3 搭乘接駁輕軌 <strong>Skytrain 往 T2</strong>。</li>
-              <li><strong>關鍵技巧：</strong>站在<strong>車廂右側</strong>，列車穿過 Jewel 時能以高空視野直擊「雨漩渦室內瀑布」。</li>
-              <li>抵達 T2 後依指標走冷氣連通道步行直通星耀樟宜（Jewel）。</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <!-- Step 3 -->
-      <div class="timeline-item">
-        <div class="card">
-          <span class="card-time">15:00 - 17:00</span>
-          <h2 class="card-title">💎 星耀樟宜放鬆慢逛 ＆ 寶可夢中心</h2>
-          <div class="card-content">
-            <ul>
-              <li><strong>寄放大行李：</strong>先到 Jewel 1 樓的 Baggage Storage 寄存行李，兩手空空最輕鬆。</li>
-              <li><strong>瀑布拍照：</strong>在資生堂森林谷與 40 米高的雨漩渦打卡合照。</li>
-              <li><strong>重點必訪：</strong>直奔 <strong>4 樓 Pokémon Center Singapore</strong>，入手新加坡限定機長/空服員皮卡丘！</li>
-            </ul>
-
-            <div class="tag-list">
-              <span class="tag highlight">必逛：Pokemon Center (4F)</span>
-              <span class="tag">松發肉骨茶 (B2)</span>
-              <span class="tag">Shake Shack (2F)</span>
-              <span class="tag">%Arabica (1F)</span>
-              <span class="tag">Mr Coconut (B2)</span>
-              <span class="tag">亞坤咖椰吐司 (1F)</span>
+        <div class="timeline-item">
+          <div class="card">
+            <span class="card-time">09:25 - 13:55</span>
+            <h2 class="card-title">✈️ 啟程飛往新加坡</h2>
+            <div class="card-content">
+              <p><strong>航班：</strong>長榮航空 BR215（桃園 T2 ➔ 樟宜 T3）</p>
+              <ul>
+                <li>13:55 降落樟宜機場第三航廈，通關並提領行李。</li>
+                <li>開啟 eSIM / 漫遊網路，準備出發探索星耀樟宜！</li>
+              </ul>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- Step 4 -->
-      <div class="timeline-item">
-        <div class="card">
-          <span class="card-time">17:00 - 18:00</span>
-          <h2 class="card-title">🚕 前往飯店：Village Hotel Bugis</h2>
-          <div class="card-content">
-            <p>領回行李後，依當下體力選擇交通方式：</p>
-            <ul>
-              <li><strong>計程車 / Grab（推薦）：</strong>車程約 25–30 分鐘，車資約 25–45 新幣，免轉乘直達飯店門口。</li>
-              <li><strong>地鐵 MRT：</strong>搭綠線（East West Line）至<strong>丹那美拉站（Tanah Merah）</strong>，月台採「川字雙邊開門」，同台轉乘往 Tuas Link 方向至 <strong>Bugis 站（EW12）</strong>，步行 5 分鐘抵達。</li>
-            </ul>
-          </div>
-          <div class="notice-box">
-            🏨 <strong>住宿：</strong>Village Hotel Bugis (390 Victoria St)<br>
-            鄰近武吉士地鐵站，過馬路就是甘榜格南阿拉伯區！
-          </div>
-        </div>
-      </div>
-
-      <!-- Step 5 -->
-      <div class="timeline-item">
-        <div class="card">
-          <span class="card-time">18:30 - 20:00</span>
-          <h2 class="card-title">🍽️ 甘榜格南特色在地晚餐</h2>
-          <div class="card-content">
-            <ul>
-              <li><strong>百年老店 Singapore Zam Zam：</strong>就在蘇丹回教堂正對面，必點現煎酥脆的招牌「印度牛肉/雞肉餡餅（Murtabak）」配濃咖哩醬，搭杯香濃冰拉茶。</li>
-              <li><strong>中東烤肉風味：</strong>巴梭拉街週邊炭烤肉串（Kebab）與熱騰騰扁麵包。</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <!-- Step 6 -->
-      <div class="timeline-item">
-        <div class="card">
-          <span class="card-time">20:00 - 21:30</span>
-          <h2 class="card-title">🕌 阿拉伯區精華夜遊三部曲</h2>
-          <div class="card-content">
-            <ul>
-              <li><strong>第 1 站｜蘇丹回教堂（Sultan Mosque）：</strong>欣賞打上金黃色暖光的巨大金色圓頂，棕櫚大道前拍攝明信片夜景。</li>
-              <li><strong>第 2 站｜哈芝巷（Haji Lane）：</strong>穿梭色彩繽紛的巨幅塗鴉彩繪牆，感受露天酒吧音樂與特色選物小店的潮流氛圍。</li>
-              <li><strong>第 3 站｜峇里巷（Bali Lane）：</strong>步調較悠閒的巷弄，適合找間義式手工冰淇淋（Gelato）或文青咖啡店坐下來吃甜點歇腳。</li>
-            </ul>
-            <p style="margin-top: 10px; font-size: 0.9rem; color: #64748b;">
-              ✨ 散步完畢步行 3 分鐘即可回到飯店，早點休息為明天的行程充電！
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <!-- ==================== DAY 5 ==================== -->
-      <div class="day-divider">🗓️ 10/12 (日) Day 5：充份補眠與伴手禮滿載</div>
-
-      <!-- Step 7 -->
-      <div class="timeline-item">
-        <div class="card">
-          <span class="card-time">08:30 - 10:15</span>
-          <h2 class="card-title">🛏️ 睡到自然醒 ＆ 整理行李退房</h2>
-          <div class="card-content">
-            <ul>
-              <li>充分補眠消除前晚 F1 正賽的狂歡疲勞。</li>
-              <li>整理戰利品與托運行李，10:15 左右於飯店大廳辦理退房。</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <!-- Step 8 -->
-      <div class="timeline-item">
-        <div class="card">
-          <span class="card-time">10:15 - 10:45</span>
-          <h2 class="card-title">🚕 叫車直奔樟宜機場 T3</h2>
-          <div class="card-content">
-            <ul>
-              <li>飯店門口叫 Grab / 計程車，走 ECP 高速直達第三航廈（T3）。</li>
-              <li>車程約 20 分鐘，兩人帶著大件行李最省力無負擔。</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <!-- Step 9 -->
-      <div class="timeline-item">
-        <div class="card">
-          <span class="card-time">10:45 - 12:30</span>
-          <h2 class="card-title">🛍️ 長榮開櫃託運 ＆ 機場伴手禮採買</h2>
-          <div class="card-content">
-            <ul>
-              <li><strong>報到託運：</strong>長榮 BR226 約 10:40 開櫃，抵達後直接掛行李。</li>
-              <li><strong>免稅伴手禮衝刺：</strong>通關後在 T3 免稅區輕鬆採買（Bacha Coffee、TWG 茶葉、Bengawan Solo 斑蘭蛋糕、IRVINS 鹹蛋黃魚皮）。</li>
-              <li><strong>注意：</strong>咖椰醬若在市區購買記得放託運，免稅店內購買則可直接手提上機。</li>
-            </ul>
-            <div class="tag-list">
-              <span class="tag highlight">Bacha Coffee</span>
-              <span class="tag">Bengawan Solo 斑蘭蛋糕</span>
-              <span class="tag">IRVINS 鹹蛋黃魚皮</span>
-              <span class="tag">TWG Tea</span>
+        <div class="timeline-item">
+          <div class="card">
+            <span class="card-time">14:40 - 15:00</span>
+            <h2 class="card-title">📸 Skytrain 瀑布絕佳機位</h2>
+            <div class="card-content">
+              <ul>
+                <li>從 T3 搭乘接駁輕軌 <strong>Skytrain 往 T2</strong>。</li>
+                <li><strong>關鍵技巧：</strong>站在<strong>車廂右側</strong>，列車穿過 Jewel 時能以高空視野直擊「雨漩渦室內瀑布」。</li>
+                <li>抵達 T2 後依指標走冷氣連通道步行直通星耀樟宜（Jewel）。</li>
+              </ul>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- Step 10 -->
-      <div class="timeline-item">
-        <div class="card">
-          <span class="card-time">12:30 - 13:10</span>
-          <h2 class="card-title">✈️ 登機門安檢 ＆ 返程台北</h2>
-          <div class="card-content">
-            <p><strong>航班：</strong>長榮航空 BR226（樟宜 T3 13:10 起飛 ➔ 桃園 T2 17:45 抵達）</p>
-            <ul>
-              <li>新加坡機場為「登機門口安檢」，請於 12:30 前抵達登機門進行隨身行李檢查。</li>
-              <li>平安滿載回台灣！</li>
-            </ul>
+        <div class="timeline-item">
+          <div class="card">
+            <span class="card-time">15:00 - 17:00</span>
+            <h2 class="card-title">💎 星耀樟宜放鬆慢逛 ＆ 寶可夢中心</h2>
+            <div class="card-content">
+              <ul>
+                <li><strong>寄放大行李：</strong>先到 Jewel 1 樓的 Baggage Storage 寄存行李，兩手空空最輕鬆。</li>
+                <li><strong>瀑布拍照：</strong>在資生堂森林谷與 40 米高的雨漩渦打卡合照。</li>
+                <li><strong>重點必訪：</strong>直奔 <strong>4 樓 Pokémon Center Singapore</strong>，入手新加坡限定機長/空服員皮卡丘！</li>
+              </ul>
+              <div class="tag-list">
+                <span class="tag highlight">必逛：Pokemon Center (4F)</span>
+                <span class="tag">松發肉骨茶 (B2)</span>
+                <span class="tag">Shake Shack (2F)</span>
+                <span class="tag">%Arabica (1F)</span>
+                <span class="tag">Mr Coconut (B2)</span>
+                <span class="tag">亞坤咖椰吐司 (1F)</span>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
 
+        <div class="timeline-item">
+          <div class="card">
+            <span class="card-time">17:00 - 18:00</span>
+            <h2 class="card-title">🚕 前往飯店：Village Hotel Bugis</h2>
+            <div class="card-content">
+              <p>領回行李後，依當下體力選擇交通方式：</p>
+              <ul>
+                <li><strong>計程車 / Grab（推薦）：</strong>車程約 25–30 分鐘，車資約 25–45 新幣，免轉乘直達飯店門口。</li>
+                <li><strong>地鐵 MRT：</strong>搭綠線（East West Line）至<strong>丹那美拉站（Tanah Merah）</strong>，月台採「川字雙邊開門」，同台轉乘往 Tuas Link 方向至 <strong>Bugis 站（EW12）</strong>，步行 5 分鐘抵達。</li>
+              </ul>
+            </div>
+            <div class="notice-box">
+              🏨 <strong>住宿：</strong>Village Hotel Bugis (390 Victoria St)<br>
+              鄰近武吉士地鐵站，過馬路就是甘榜格南阿拉伯區！
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="card">
+            <span class="card-time">18:30 - 20:00</span>
+            <h2 class="card-title">🍽️ 甘榜格南特色在地晚餐</h2>
+            <div class="card-content">
+              <ul>
+                <li><strong>百年老店 Singapore Zam Zam：</strong>就在蘇丹回教堂正對面，必點現煎酥脆的招牌「印度牛肉/雞肉餡餅（Murtabak）」配濃咖哩醬，搭杯香濃冰拉茶。</li>
+                <li><strong>中東烤肉風味：</strong>巴梭拉街週邊炭烤肉串（Kebab）與熱騰騰扁麵包。</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="card">
+            <span class="card-time">20:00 - 21:30</span>
+            <h2 class="card-title">🕌 阿拉伯區精華夜遊三部曲</h2>
+            <div class="card-content">
+              <ul>
+                <li><strong>第 1 站｜蘇丹回教堂（Sultan Mosque）：</strong>欣賞打上金黃色暖光的巨大金色圓頂，棕櫚大道前拍攝明信片夜景。</li>
+                <li><strong>第 2 站｜哈芝巷（Haji Lane）：</strong>穿梭色彩繽紛的巨幅塗鴉彩繪牆，感受露天酒吧音樂與特色選物小店的潮流氛圍。</li>
+                <li><strong>第 3 站｜峇里巷（Bali Lane）：</strong>步調較悠閒的巷弄，適合找間義式手工冰淇淋（Gelato）或文青咖啡店坐下來吃甜點歇腳。</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
+
+    <!-- ==================== DAY 2 ==================== -->
+    <div class="day-content" id="day-2">
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="card">
+            <span class="card-time">09:00 - 12:00</span>
+            <h2 class="card-title">☕ 傳統南洋早餐 ＆ 魚尾獅公園打卡</h2>
+            <div class="card-content">
+              <p>規劃中：亞坤咖椰吐司半熟蛋、魚尾獅噴水借位合照...</p>
+            </div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="card">
+            <span class="card-time">12:00 - 17:00</span>
+            <h2 class="card-title">🍲 松發肉骨茶 ＆ 濱海灣花園冷室</h2>
+            <div class="card-content">
+              <p>規劃中：白胡椒肉骨茶無限續湯、雲霧林室內高空瀑布避暑...</p>
+            </div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="card">
+            <span class="card-time">17:30 之後</span>
+            <h2 class="card-title">🏎️ F1 Free Practice 練習賽 / 金沙夜景</h2>
+            <div class="card-content">
+              <p>規劃中：進場體驗摩天輪 or 水岸浪漫晚餐散步...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== DAY 3 ==================== -->
+    <div class="day-content" id="day-3">
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="card">
+            <span class="card-time">09:30 - 13:30</span>
+            <h2 class="card-title">🏮 牛車水文化巡禮 ＆ 麥士威天天海南雞飯</h2>
+            <div class="card-content">
+              <p>規劃中：佛牙寺參觀、品嚐知名米其林推薦海南雞飯...</p>
+            </div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="card">
+            <span class="card-time">16:00 - 23:00</span>
+            <h2 class="card-title">🏁 F1 排位賽 Qualifying ＆ 賽道演唱會</h2>
+            <div class="card-content">
+              <p>規劃中：Skyline Grandstand 觀戰桿位爭奪戰、免費搭摩天輪看夜景...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== DAY 4 ==================== -->
+    <div class="day-content" id="day-4">
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="card">
+            <span class="card-time">10:00 - 14:00</span>
+            <h2 class="card-title">🥞 武吉士商圈悠閒早午餐 ＆ 休息蓄力</h2>
+            <div class="card-content">
+              <p>規劃中：早午餐、採買紀念品、回房午休備戰晚間正賽...</p>
+            </div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="card">
+            <span class="card-time">16:00 - 23:30</span>
+            <h2 class="card-title">🏆 F1 正賽高潮 Race Day ＆ 賽道煙火</h2>
+            <div class="card-content">
+              <p>規劃中：正賽起跑、維修區攻防戰、頒獎煙火秀、賽道巡禮 Track Invasion...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== DAY 5 ==================== -->
+    <div class="day-content" id="day-5">
+      <div class="timeline">
+
+        <div class="timeline-item">
+          <div class="card">
+            <span class="card-time">08:30 - 10:15</span>
+            <h2 class="card-title">🛏️ 睡到自然醒 ＆ 整理行李退房</h2>
+            <div class="card-content">
+              <ul>
+                <li>充分補眠消除前晚 F1 正賽的狂歡疲勞。</li>
+                <li>整理戰利品與托運行李，10:15 左右於飯店大廳辦理退房。</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="card">
+            <span class="card-time">10:15 - 10:45</span>
+            <h2 class="card-title">🚕 叫車直奔樟宜機場 T3</h2>
+            <div class="card-content">
+              <ul>
+                <li>飯店門口叫 Grab / 計程車，走 ECP 高速直達第三航廈（T3）。</li>
+                <li>車程約 20 分鐘，兩人帶著大件行李最省力無負擔。</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="card">
+            <span class="card-time">10:45 - 12:30</span>
+            <h2 class="card-title">🛍️ 長榮開櫃託運 ＆ 機場伴手禮採買</h2>
+            <div class="card-content">
+              <ul>
+                <li><strong>報到託運：</strong>長榮 BR226 約 10:40 開櫃，抵達後直接掛行李。</li>
+                <li><strong>免稅伴手禮衝刺：</strong>通關後在 T3 免稅區輕鬆採買（Bacha Coffee、TWG 茶葉、Bengawan Solo 斑蘭蛋糕、IRVINS 鹹蛋黃魚皮）。</li>
+                <li><strong>注意：</strong>咖椰醬若在市區購買記得放託運，免稅店內購買則可直接手提上機。</li>
+              </ul>
+              <div class="tag-list">
+                <span class="tag highlight">Bacha Coffee</span>
+                <span class="tag">Bengawan Solo 斑蘭蛋糕</span>
+                <span class="tag">IRVINS 鹹蛋黃魚皮</span>
+                <span class="tag">TWG Tea</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="card">
+            <span class="card-time">12:30 - 13:10</span>
+            <h2 class="card-title">✈️ 登機門安檢 ＆ 返程台北</h2>
+            <div class="card-content">
+              <p><strong>航班：</strong>長榮航空 BR226（樟宜 T3 13:10 起飛 ➔ 桃園 T2 17:45 抵達）</p>
+              <ul>
+                <li>新加坡機場為「登機門口安檢」，請於 12:30 前抵達登機門進行隨身行李檢查。</li>
+                <li>平安滿載回台灣！</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
   </main>
 
   <footer>
     <p>Have an amazing trip to Singapore! 🏎️💨</p>
   </footer>
+
+  <!-- Tab 切換邏輯 -->
+  <script>
+    function switchDay(dayNum) {
+      // 1. 切換按鈕的 active 樣式
+      const buttons = document.querySelectorAll('.tab-btn');
+      buttons.forEach((btn, index) => {
+        if (index === dayNum - 1) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+
+      // 2. 切換對應天數內容的顯示
+      const contents = document.querySelectorAll('.day-content');
+      contents.forEach(content => {
+        content.classList.remove('active');
+      });
+      const activeContent = document.getElementById(`day-${dayNum}`);
+      if (activeContent) {
+        activeContent.classList.add('active');
+      }
+
+      // 讓點擊的按鈕自動捲動到可視範圍（針對手機橫向捲動）
+      buttons[dayNum - 1].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+    }
+  </script>
 
 </body>
 </html>
