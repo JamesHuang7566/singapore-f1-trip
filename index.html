@@ -416,13 +416,25 @@
 
         <div class="timeline-item">
           <div class="card f1-card">
-            <span class="card-time f1-badge">F1 官方賽程</span>
-            <h2 class="card-title">🏎️ F1 自由練習賽 Free Practice</h2>
+            <span class="card-time f1-badge">16:30 - 17:30</span>
+            <h2 class="card-title">🏎️ F1 PRACTICE 1 (自由練習賽)</h2>
             <div class="card-content">
               <ul>
-                <li><strong>賽事：</strong>Free Practice 自由練習賽（預計傍晚至夜間進行）。</li>
-                <li><strong>票券：</strong>Skyline Grandstand (Access All Zones)。</li>
-                <li><strong>備註：</strong>此日可視日間行程節奏自由決定是否進場。</li>
+                <li><strong>賽事：</strong>週末唯一的 60 分鐘自由練習賽。</li>
+                <li><strong>備註：</strong>可視白天觀光節奏自由決定是否提前進場適應看台。</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="card f1-card">
+            <span class="card-time f1-badge">20:30 - 21:14</span>
+            <h2 class="card-title">⚡ F1 SPRINT QUALIFYING (衝刺排位賽)</h2>
+            <div class="card-content">
+              <ul>
+                <li><strong>賽事：</strong>決定週六衝刺賽發車順位的衝刺排位賽（SQ1, SQ2, SQ3）。</li>
+                <li><strong>地點：</strong>Skyline Grandstand。</li>
               </ul>
             </div>
           </div>
@@ -445,13 +457,24 @@
 
         <div class="timeline-item">
           <div class="card f1-card">
-            <span class="card-time f1-badge">F1 官方賽程</span>
-            <h2 class="card-title">🏁 F1 排位賽 Qualifying</h2>
+            <span class="card-time f1-badge">17:00 - 18:00</span>
+            <h2 class="card-title">🏁 F1 SPRINT (衝刺正賽)</h2>
             <div class="card-content">
               <ul>
-                <li><strong>賽事：</strong>Qualifying 排位賽（決定週日正賽桿位起跑順序）。</li>
-                <li><strong>看台：</strong>Skyline Grandstand（近距離見證最後彎角與衝刺段）。</li>
-                <li><strong>場內福利：</strong>持該區票券可免費排隊搭乘 Zone 1 新加坡摩天輪。</li>
+                <li><strong>賽事：</strong>約 100 公里的短程衝刺正賽，前 8 名直接奪取年度積分。</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="card f1-card">
+            <span class="card-time f1-badge">21:00 - 22:00</span>
+            <h2 class="card-title">⏱️ F1 QUALIFYING (正賽排位賽)</h2>
+            <div class="card-content">
+              <ul>
+                <li><strong>賽事：</strong>決定週日大獎賽正賽桿位與發車席次的傳統排位賽（Q1, Q2, Q3）。</li>
+                <li><strong>場內福利：</strong>賽事空檔可持票免費排隊搭乘 Zone 1 新加坡摩天輪。</li>
               </ul>
             </div>
           </div>
@@ -474,12 +497,13 @@
 
         <div class="timeline-item">
           <div class="card f1-card">
-            <span class="card-time f1-badge">F1 官方賽程</span>
-            <h2 class="card-title">🏆 F1 新加坡大獎賽 正賽 Race Day</h2>
+            <span class="card-time f1-badge">20:00 起跑</span>
+            <h2 class="card-title">🏆 F1 新加坡大獎賽 正賽 (RACE)</h2>
             <div class="card-content">
               <ul>
-                <li><strong>賽事：</strong>Grand Prix 正賽決賽（夜間起跑）。</li>
-                <li><strong>重頭戲：</strong>車手巡遊 Drivers' Parade、正賽起跑、頒獎典禮與賽後煙火秀。</li>
+                <li><strong>18:00 - 18:30：</strong>車手巡遊 Drivers' Parade。</li>
+                <li><strong>20:00：</strong>正賽正式暖胎起跑（62 圈夜戰高潮）。</li>
+                <li><strong>賽後活動：</strong>頒獎典禮、煙火秀、賽道巡禮（Track Invasion）與主舞台閉幕演唱會。</li>
               </ul>
             </div>
           </div>
@@ -563,7 +587,6 @@
   <!-- Tab 切換邏輯 -->
   <script>
     function switchDay(dayNum) {
-      // 1. 切換按鈕的 active 樣式
       const buttons = document.querySelectorAll('.tab-btn');
       buttons.forEach((btn, index) => {
         if (index === dayNum - 1) {
@@ -573,7 +596,6 @@
         }
       });
 
-      // 2. 切換對應天數內容的顯示
       const contents = document.querySelectorAll('.day-content');
       contents.forEach(content => {
         content.classList.remove('active');
@@ -583,7 +605,6 @@
         activeContent.classList.add('active');
       }
 
-      // 讓點擊的按鈕自動捲動到可視範圍
       buttons[dayNum - 1].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
     }
   </script>
