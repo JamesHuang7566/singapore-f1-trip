@@ -18,6 +18,11 @@
       --timeline-line: #cbd5e1;
     }
 
+    html {
+      scrollbar-gutter: stable;
+      overflow-y: scroll;
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -31,10 +36,6 @@
       color: var(--text-main);
       line-height: 1.6;
       padding-bottom: 60px;
-
-      /* 永遠保留滾動條空間，徹底解決頁面長短切換時的寬度跳動問題 */
-      scrollbar-gutter: stable;
-      overflow-y: scroll;
     }
 
     /* 頂部固定 Header */
@@ -130,7 +131,7 @@
       color: #94a3b8;
     }
 
-    /* 導航 Tabs 欄位：固定 7 等分單列排開，無須橫向滑動 */
+    /* 導航 Tabs 欄位 */
     .tabs-wrapper {
       position: sticky;
       top: 0;
@@ -144,7 +145,7 @@
     .container {
       max-width: 760px;
       margin: 0 auto;
-      padding: 0 8px; /* 縮小左右邊距以容納單列 7 格 */
+      padding: 0 8px;
     }
 
     .tabs-grid {
@@ -167,7 +168,7 @@
       color: var(--text-muted);
       cursor: pointer;
       transition: all 0.15s ease;
-      min-width: 0; /* 避免 flex/grid 溢出破版 */
+      min-width: 0;
     }
 
     .tab-btn .btn-top {
@@ -361,7 +362,7 @@
 </head>
 <body>
 
-  <!-- 固定 Header：大標題與航班卡片 -->
+  <!-- 固定 Header -->
   <header>
     <div class="container">
       <div class="header-top">
@@ -370,7 +371,7 @@
         <p class="sub">Skyline Grandstand • Village Hotel Bugis</p>
       </div>
 
-      <!-- 航班資訊雙卡片 -->
+      <!-- 航班卡片 -->
       <div class="flight-container">
         <!-- 去程 -->
         <div class="flight-card">
@@ -413,34 +414,36 @@
     </div>
   </header>
 
-  <!-- 導航列：嚴格單列 7 格排開，含星期資訊，手機直式免滑動 -->
+  <!-- 導航列 -->
   <div class="tabs-wrapper">
     <div class="container">
       <div class="tabs-grid">
         <button class="tab-btn special-tab active" onclick="loadPage('info.html', this)">
+          <span class="btn-top">須知</span>
           <span class="btn-main">ℹ️ 資訊</span>
         </button>
         <button class="tab-btn" onclick="loadPage('day1.html', this)">
-          <span class="btn-top">D1 抵達日</span>
-          <span class="btn-main">10/8(四)</span>
+          <span class="btn-top">週四</span>
+          <span class="btn-main">10.8 D1</span>
         </button>
         <button class="tab-btn" onclick="loadPage('day2.html', this)">
-          <span class="btn-top">D2 練習1/衝刺排位</span>
-          <span class="btn-main">10.9(五)</span>
+          <span class="btn-top">週五</span>
+          <span class="btn-main">10.9 D2</span>
         </button>
         <button class="tab-btn" onclick="loadPage('day3.html', this)">
-          <span class="btn-top">D3 衝刺賽/正賽排位</span>
-          <span class="btn-main">10.10(六)</span>
+          <span class="btn-top">週六</span>
+          <span class="btn-main">10.10 D3</span>
         </button>
         <button class="tab-btn" onclick="loadPage('day4.html', this)">
-          <span class="btn-top">D4 正賽</span>
-          <span class="btn-main">10.11(日)</span>
+          <span class="btn-top">週日</span>
+          <span class="btn-main">10.11 D4</span>
         </button>
         <button class="tab-btn" onclick="loadPage('day5.html', this)">
-          <span class="btn-top">D5 回家</span>
-          <span class="btn-main">10.12(一)</span>
+          <span class="btn-top">週一</span>
+          <span class="btn-main">10.12 D5</span>
         </button>
         <button class="tab-btn special-tab" onclick="loadPage('account.html', this)">
+          <span class="btn-top">收支</span>
           <span class="btn-main">💰 記帳</span>
         </button>
       </div>
@@ -455,34 +458,38 @@
     <p>Singapore Grand Prix 2026 • Have a great race trip! 🏎️💨</p>
   </footer>
 
+  <!-- 頁面載入器：會自動觸發並執行子檔案內部寫的所有 <script>！ -->
   <script>
     async function loadPage(pageUrl, btnElement) {
-      // 1. 切換按鈕 active 樣式
       const buttons = document.querySelectorAll('.tab-btn');
       buttons.forEach(btn => btn.classList.remove('active'));
       if (btnElement) {
         btnElement.classList.add('active');
       }
 
-      // 2. 非同步載入 HTML
       const container = document.getElementById('content-container');
       try {
         const response = await fetch(pageUrl);
         if (!response.ok) throw new Error('Network error');
         const html = await response.text();
+        
+        // 1. 將 HTML 插入容器
         container.innerHTML = html;
         window.scrollTo({ top: 0, behavior: 'smooth' });
 
-        // 若是記帳頁面，載入完成後初始化記帳邏輯
-        if (pageUrl === 'account.html' && typeof initAccountBook === 'function') {
-          initAccountBook();
-        }
+        // 2. 關鍵修正：解析出該頁自己寫的 <script> 並直接動態執行它！
+        const scripts = container.querySelectorAll('script');
+        scripts.forEach(oldScript => {
+          const newScript = document.createElement('script');
+          Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
+          newScript.appendChild(document.createTextNode(oldScript.innerHTML));
+          oldScript.parentNode.replaceChild(newScript, oldScript);
+        });
       } catch (err) {
-        container.innerHTML = `<div style="text-align:center; padding: 40px; color: #ef4444;">載入失敗 (${pageUrl})，請確認檔案是否存在，或透過 Web Server (如 Live Server / GitHub Pages) 預覽。</div>`;
+        container.innerHTML = `<div style="text-align:center; padding: 40px; color: #ef4444;">載入失敗 (${pageUrl})，請確認檔案是否存在，或透過 Web Server (如 Live Server) 預覽。</div>`;
       }
     }
 
-    // 預設載入第一個【資訊頁面 info.html】
     document.addEventListener('DOMContentLoaded', () => {
       const firstBtn = document.querySelector('.tab-btn');
       loadPage('info.html', firstBtn);
