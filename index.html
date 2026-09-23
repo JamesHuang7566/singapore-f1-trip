@@ -2,16 +2,17 @@
 <html lang="zh-TW">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>2026 Singapore & F1 Grand Prix Itinerary</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Singapore Oct 8 - 12, 2026 | F1 新加坡大獎賽之旅</title>
   <style>
     :root {
-      --primary: #d32f2f;
-      --primary-dark: #b71c1c;
-      --accent: #ffb300;
-      --bg: #f8fafc;
+      --primary: #e10600; /* F1 經典紅 */
+      --primary-dark: #b30000;
+      --accent: #ffb800;
+      --bg: #0f172a;
+      --page-bg: #f8fafc;
       --card-bg: #ffffff;
-      --text: #1e293b;
+      --text-main: #1e293b;
       --text-muted: #64748b;
       --border: #e2e8f0;
       --timeline-line: #cbd5e1;
@@ -22,45 +23,118 @@
       margin: 0;
       padding: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans TC", sans-serif;
+      -webkit-tap-highlight-color: transparent;
     }
 
     body {
-      background-color: var(--bg);
-      color: var(--text);
+      background-color: var(--page-bg);
+      color: var(--text-main);
       line-height: 1.6;
       padding-bottom: 60px;
     }
 
+    /* 頂部固定 Header 區域 */
     header {
-      background: linear-gradient(135deg, #1e293b, #0f172a);
+      background: linear-gradient(135deg, #0b0f19 0%, #1e293b 100%);
       color: #fff;
-      padding: 35px 20px 25px;
+      padding: 24px 16px 18px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .header-top {
       text-align: center;
-      position: relative;
+      margin-bottom: 14px;
+    }
+
+    .header-badge {
+      display: inline-block;
+      background: rgba(225, 6, 0, 0.2);
+      border: 1px solid var(--primary);
+      color: #ff6b6b;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 2px 10px;
+      border-radius: 999px;
+      margin-bottom: 6px;
+      letter-spacing: 0.5px;
     }
 
     header h1 {
-      font-size: 1.7rem;
-      letter-spacing: 1px;
-      margin-bottom: 6px;
-    }
-
-    header p {
-      color: #94a3b8;
-      font-size: 0.9rem;
-    }
-
-    .badge-f1 {
-      display: inline-block;
-      background-color: var(--primary);
-      color: #fff;
-      font-size: 0.75rem;
-      font-weight: bold;
-      padding: 3px 10px;
-      border-radius: 999px;
-      margin-top: 10px;
-      text-transform: uppercase;
+      font-size: 1.45rem;
+      font-weight: 800;
       letter-spacing: 0.5px;
+      margin-bottom: 2px;
+    }
+
+    header p.sub {
+      color: #94a3b8;
+      font-size: 0.85rem;
+    }
+
+    /* 航班資訊雙卡片 */
+    .flight-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .flight-card {
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(10px);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 0.8rem;
+    }
+
+    .flight-type {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 700;
+      color: #f1f5f9;
+      margin-bottom: 4px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 4px;
+    }
+
+    .flight-type .tag {
+      background: var(--primary);
+      color: #fff;
+      font-size: 0.68rem;
+      padding: 1px 6px;
+      border-radius: 4px;
+    }
+
+    .flight-row {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 3px;
+      color: #cbd5e1;
+    }
+
+    .flight-time {
+      font-weight: 700;
+      color: #fff;
+      font-size: 0.88rem;
+    }
+
+    .flight-port {
+      font-size: 0.72rem;
+      color: #94a3b8;
+    }
+
+    /* 導航 Tabs 欄位 */
+    .tabs-wrapper {
+      position: sticky;
+      top: 0;
+      background: rgba(248, 250, 252, 0.95);
+      backdrop-filter: blur(10px);
+      z-index: 100;
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
     }
 
     .container {
@@ -69,23 +143,12 @@
       padding: 0 16px;
     }
 
-    /* 頂部導航 Tabs 固定置頂 */
-    .tabs-wrapper {
-      position: sticky;
-      top: 0;
-      background: rgba(248, 250, 252, 0.95);
-      backdrop-filter: blur(8px);
-      z-index: 100;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 24px;
-    }
-
     .tabs {
       display: flex;
       overflow-x: auto;
       white-space: nowrap;
-      padding: 12px 0;
-      gap: 10px;
+      padding: 10px 0;
+      gap: 8px;
       scrollbar-width: none;
     }
 
@@ -94,12 +157,12 @@
     }
 
     .tab-btn {
-      padding: 8px 16px;
+      padding: 7px 14px;
       border: 1px solid var(--border);
       border-radius: 20px;
       background: #fff;
       color: var(--text-muted);
-      font-size: 0.88rem;
+      font-size: 0.82rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.2s ease;
@@ -110,21 +173,35 @@
       background: var(--primary);
       color: #fff;
       border-color: var(--primary);
-      box-shadow: 0 2px 8px rgba(211, 47, 47, 0.3);
+      box-shadow: 0 2px 8px rgba(225, 6, 0, 0.3);
+    }
+
+    .tab-btn.special-tab {
+      background: #f1f5f9;
+      color: #334155;
+      border-color: #cbd5e1;
+    }
+
+    .tab-btn.special-tab.active {
+      background: #0f172a;
+      color: #fff;
+      border-color: #0f172a;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.3);
     }
 
     /* 動態載入容器 */
     #content-container {
-      min-height: 400px;
+      margin-top: 18px;
+      min-height: 450px;
       animation: fadeIn 0.25s ease-in-out;
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
+      from { opacity: 0; transform: translateY(5px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* 時間軸與卡片共用樣式 */
+    /* 共用 Timeline 與卡片樣式 */
     .timeline {
       position: relative;
       padding-left: 28px;
@@ -142,7 +219,7 @@
 
     .timeline-item {
       position: relative;
-      margin-bottom: 22px;
+      margin-bottom: 20px;
     }
 
     .timeline-item::before {
@@ -173,7 +250,7 @@
 
     .card-time {
       display: inline-block;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       font-weight: 700;
       color: var(--primary);
       background: #fee2e2;
@@ -188,9 +265,9 @@
     }
 
     .card-title {
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       font-weight: 700;
-      color: var(--text);
+      color: var(--text-main);
       margin-bottom: 8px;
       display: flex;
       align-items: center;
@@ -198,7 +275,7 @@
     }
 
     .card-content {
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       color: #334155;
     }
 
@@ -229,7 +306,7 @@
     }
 
     .tag {
-      font-size: 0.75rem;
+      font-size: 0.74rem;
       padding: 2px 8px;
       border-radius: 4px;
       background: #f1f5f9;
@@ -256,70 +333,120 @@
     footer {
       text-align: center;
       margin-top: 40px;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       color: var(--text-muted);
     }
   </style>
 </head>
 <body>
 
+  <!-- 固定 Header：包含大標題與航班卡片 -->
   <header>
-    <h1>- 🇸🇬 新加坡 ＆ F1 賽車之旅 -</h1>
-    <p>2026/10/08 - 10/12 • 5 Days 4 Nights</p>
-    <div class="badge-f1">F1 Singapore GP • Skyline Grandstand</div>
+    <div class="container">
+      <div class="header-top">
+        <div class="header-badge">Singapore Oct 8 - 12, 2026</div>
+        <h1>F1 新加坡大獎賽之旅</h1>
+        <p class="sub">Skyline Grandstand • Village Hotel Bugis</p>
+      </div>
+
+      <!-- 航班資訊雙卡片 -->
+      <div class="flight-container">
+        <!-- 去程 -->
+        <div class="flight-card">
+          <div class="flight-type">
+            <span>去程 • 長榮航空</span>
+            <span class="tag">BR215</span>
+          </div>
+          <div class="flight-row">
+            <div>
+              <div class="flight-time">09:25</div>
+              <div class="flight-port">TPE 桃園 T2</div>
+            </div>
+            <div style="align-self: center; color: #64748b;">➔</div>
+            <div style="text-align: right;">
+              <div class="flight-time">13:55</div>
+              <div class="flight-port">SIN 樟宜 T3</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 回程 -->
+        <div class="flight-card">
+          <div class="flight-type">
+            <span>回程 • 長榮航空</span>
+            <span class="tag">BR226</span>
+          </div>
+          <div class="flight-row">
+            <div>
+              <div class="flight-time">13:10</div>
+              <div class="flight-port">SIN 樟宜 T3</div>
+            </div>
+            <div style="align-self: center; color: #64748b;">➔</div>
+            <div style="text-align: right;">
+              <div class="flight-time">17:45</div>
+              <div class="flight-port">TPE 桃園 T2</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </header>
 
-  <!-- 頂部固定 Tab 導航 -->
+  <!-- 導航列：Day 1 ~ Day 5 + 資訊 + 記帳 -->
   <div class="tabs-wrapper">
     <div class="container">
       <div class="tabs">
-        <button class="tab-btn active" onclick="loadDay(1)">10/8 (四) Day 1</button>
-        <button class="tab-btn" onclick="loadDay(2)">10/9 (五) Day 2</button>
-        <button class="tab-btn" onclick="loadDay(3)">10/10 (六) Day 3</button>
-        <button class="tab-btn" onclick="loadDay(4)">10/11 (日) Day 4</button>
-        <button class="tab-btn" onclick="loadDay(5)">10/12 (一) Day 5</button>
+        <button class="tab-btn active" onclick="loadPage('day1.html', this)">10/8 (四) Day 1</button>
+        <button class="tab-btn" onclick="loadPage('day2.html', this)">10/9 (五) Day 2</button>
+        <button class="tab-btn" onclick="loadPage('day3.html', this)">10/10 (六) Day 3</button>
+        <button class="tab-btn" onclick="loadPage('day4.html', this)">10/11 (日) Day 4</button>
+        <button class="tab-btn" onclick="loadPage('day5.html', this)">10/12 (一) Day 5</button>
+        <button class="tab-btn special-tab" onclick="loadPage('info.html', this)">ℹ️ 資訊</button>
+        <button class="tab-btn special-tab" onclick="loadPage('account.html', this)">💰 記帳</button>
       </div>
     </div>
   </div>
 
   <main class="container">
-    <!-- 各天內容將動態載入至此 -->
     <div id="content-container"></div>
   </main>
 
   <footer>
-    <p>Have an amazing trip to Singapore! 🏎️💨</p>
+    <p>Singapore Grand Prix 2026 • Have a great race trip! 🏎️💨</p>
   </footer>
 
   <script>
-    async function loadDay(dayNum) {
-      // 1. 切換按鈕 active 樣式
+    async function loadPage(pageUrl, btnElement) {
+      // 1. 切換按鈕樣式
       const buttons = document.querySelectorAll('.tab-btn');
-      buttons.forEach((btn, index) => {
-        if (index === dayNum - 1) {
-          btn.classList.add('active');
-        } else {
-          btn.classList.remove('active');
-        }
-      });
-      buttons[dayNum - 1].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      buttons.forEach(btn => btn.classList.remove('active'));
+      if (btnElement) {
+        btnElement.classList.add('active');
+        btnElement.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      }
 
-      // 2. 非同步載入對應天的 HTML 片段
+      // 2. 非同步載入 HTML
       const container = document.getElementById('content-container');
       try {
-        const response = await fetch(`day${dayNum}.html`);
+        const response = await fetch(pageUrl);
         if (!response.ok) throw new Error('Network error');
         const html = await response.text();
         container.innerHTML = html;
         window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        // 若是記帳頁面，載入完成後初始化記帳邏輯
+        if (pageUrl === 'account.html' && typeof initAccountBook === 'function') {
+          initAccountBook();
+        }
       } catch (err) {
-        container.innerHTML = `<div style="text-align:center; padding: 40px; color: #ef4444;">載入失敗，請確認 day${dayNum}.html 是否存在，或使用 Local Web Server (如 Live Server) 瀏覽。</div>`;
+        container.innerHTML = `<div style="text-align:center; padding: 40px; color: #ef4444;">載入失敗 (${pageUrl})，請確認檔案是否存在，或透過 Web Server (如 Live Server / GitHub Pages) 預覽。</div>`;
       }
     }
 
-    // 頁面初次載入預設顯示 Day 1
+    // 預設載入 Day 1
     document.addEventListener('DOMContentLoaded', () => {
-      loadDay(1);
+      const firstBtn = document.querySelector('.tab-btn');
+      loadPage('day1.html', firstBtn);
     });
   </script>
 
