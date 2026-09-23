@@ -31,6 +31,10 @@
       color: var(--text-main);
       line-height: 1.6;
       padding-bottom: 60px;
+
+      /* 永遠保留滾動條空間，徹底解決頁面長短切換時的寬度跳動問題 */
+      scrollbar-gutter: stable;
+      overflow-y: scroll;
     }
 
     /* 頂部固定 Header */
