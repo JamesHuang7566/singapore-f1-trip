@@ -1,173 +1,370 @@
-<div class="account-wrapper" style="display: flex; flex-direction: column; gap: 16px; width: 100%; box-sizing: border-box;">
+<div class="account-container" style="display: flex; flex-direction: column; gap: 16px; width: 100%; box-sizing: border-box;">
 
-  <!-- 匯率與總額統計看板 -->
-  <div class="card" style="background: linear-gradient(135deg, #1e293b, #0f172a); color: #fff; border: none; box-sizing: border-box;">
+  <!-- 頂部標題區 -->
+  <div>
+    <h2 style="font-size: 1.35rem; font-weight: 800; color: #1e293b; display: flex; align-items: center; gap: 6px;">
+      <span>💰</span> 兩人記帳
+    </h2>
+    <p style="font-size: 0.85rem; color: #64748b; margin-top: 2px;">
+      旅途花費隨手記，自動換算台幣、資料保存在手機裡
+    </p>
+  </div>
+
+  <!-- 新增：新幣 ⇄ 台幣 即時匯率轉換器 -->
+  <div class="card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 14px 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-      <span style="font-size: 0.8rem; color: #94a3b8; font-weight: 600;">消費總額統計</span>
-      <div style="font-size: 0.75rem; color: #cbd5e1; display: flex; align-items: center; gap: 4px;">
-        匯率: 1 SGD ≈ <input type="number" id="fxRate" value="24.5" step="0.1" style="width: 52px; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); border-radius: 4px; color: #fff; text-align: center; font-size: 0.75rem; box-sizing: border-box;" onchange="updateSummary()" /> TWD
+      <span style="font-size: 0.88rem; font-weight: 700; color: #0f172a; display: flex; align-items: center; gap: 6px;">
+        💱 新幣匯率換算
+      </span>
+      <div style="font-size: 0.75rem; color: #64748b; display: flex; align-items: center; gap: 4px;">
+        1 SGD ≈ <input type="number" id="calcRate" value="24.5" step="0.1" style="width: 52px; padding: 2px 4px; border: 1px solid #cbd5e1; border-radius: 4px; text-align: center; font-size: 0.75rem; font-weight: bold; color: #e10600;" oninput="onRateChange()" /> TWD
       </div>
     </div>
-
-    <div style="display: flex; justify-content: space-around; text-align: center; padding: 10px 0;">
-      <div>
-        <div style="font-size: 0.75rem; color: #94a3b8;">新幣總計 (SGD)</div>
-        <div id="totalSGD" style="font-size: 1.5rem; font-weight: 800; color: #38bdf8;">$ 0.00</div>
+    <div style="display: grid; grid-template-columns: 1fr auto 1fr; gap: 8px; align-items: center;">
+      <div style="position: relative;">
+        <span style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); font-size: 0.78rem; font-weight: 700; color: #64748b;">SGD</span>
+        <input type="number" id="convSgd" placeholder="0" style="width: 100%; box-sizing: border-box; padding: 8px 8px 8px 42px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.95rem; font-weight: 700; color: #0284c7;" oninput="convertFromSgd()" />
       </div>
-      <div style="border-right: 1px solid rgba(255,255,255,0.1);"></div>
-      <div>
-        <div style="font-size: 0.75rem; color: #94a3b8;">折合台幣 (TWD)</div>
-        <div id="totalTWD" style="font-size: 1.5rem; font-weight: 800; color: #facc15;">NT$ 0</div>
+      <span style="color: #94a3b8; font-weight: bold;">⇄</span>
+      <div style="position: relative;">
+        <span style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); font-size: 0.78rem; font-weight: 700; color: #64748b;">TWD</span>
+        <input type="number" id="convTwd" placeholder="0" style="width: 100%; box-sizing: border-box; padding: 8px 8px 8px 44px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.95rem; font-weight: 700; color: #d97706;" oninput="convertFromTwd()" />
       </div>
     </div>
   </div>
 
-  <!-- 新增記帳表單 -->
-  <div class="card" style="box-sizing: border-box;">
-    <h2 class="card-title" style="font-size: 1rem;">➕ 新增消費支出</h2>
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px;">
-      <select id="accCategory" style="width: 100%; box-sizing: border-box; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem; background: #fff;">
-        <option value="🍽️ 餐飲">🍽️ 餐飲美食</option>
-        <option value="🚕 交通">🚕 交通接駁</option>
-        <option value="🛍️ 購物">🛍️ 紀念購物</option>
-        <option value="🏎️ F1">🏎️ F1 周邊</option>
-        <option value="🎟️ 門票">🎟️ 景點門票</option>
-        <option value="📦 其他">📦 其他支出</option>
-      </select>
-
-      <select id="accCurrency" style="width: 100%; box-sizing: border-box; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem; background: #fff;">
-        <option value="SGD">新幣 (SGD)</option>
-        <option value="TWD">台幣 (TWD)</option>
-      </select>
+  <!-- 兩人記帳主卡片 (完全復刻原設計) -->
+  <div class="card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 18px 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+    
+    <!-- 模組子標題 -->
+    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 14px;">
+      <span style="display: inline-block; width: 4px; height: 16px; background-color: #e10600; border-radius: 2px;"></span>
+      <h3 style="font-size: 1.05rem; font-weight: 800; color: #1e293b; display: flex; align-items: center; gap: 4px;">
+        💰 兩人記帳器
+      </h3>
     </div>
 
-    <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 8px; margin-top: 8px;">
-      <input type="text" id="accItem" placeholder="項目名稱 (例如: 亞坤早餐)" style="width: 100%; box-sizing: border-box; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem;" />
-      <input type="number" id="accAmount" placeholder="金額" step="0.1" style="width: 100%; box-sizing: border-box; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem;" />
+    <!-- 準備的現金總額卡片 (點擊可修改) -->
+    <div onclick="editTotalBudget()" style="background: #fef9c3; border: 1px solid #fef08a; border-radius: 10px; padding: 12px 14px; margin-bottom: 14px; cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+      <div style="font-size: 0.92rem; font-weight: 700; color: #1e293b; display: flex; align-items: center; gap: 6px;">
+        <span>💵</span> 準備的現金總額 S$ <span id="budgetDisplay" style="font-size: 1.15rem; font-weight: 900; color: #0f172a;">1500</span>
+      </div>
+      <span style="font-size: 0.72rem; color: #854d0e; text-decoration: underline;">修改</span>
     </div>
 
-    <button onclick="addRecord()" style="margin-top: 10px; width: 100%; box-sizing: border-box; background: var(--primary); color: #fff; border: none; padding: 9px; border-radius: 8px; font-weight: 700; font-size: 0.9rem; cursor: pointer;">加入明細</button>
+    <!-- 項目輸入框 -->
+    <div style="margin-bottom: 10px;">
+      <input type="text" id="entryItem" placeholder="項目（例：亞坤早餐、長榮機票）" style="width: 100%; box-sizing: border-box; padding: 11px 14px; border: 1px solid #e2e8f0; border-radius: 10px; font-size: 0.92rem; background: #f8fafc; color: #1e293b; outline: none;" />
+    </div>
+
+    <!-- 金額輸入框 + 記一筆按鈕 -->
+    <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+      <div style="flex: 1; position: relative;">
+        <input type="number" id="entryAmount" step="0.1" placeholder="金額 S$" style="width: 100%; box-sizing: border-box; padding: 11px 14px; border: 1px solid #e2e8f0; border-radius: 10px; font-size: 0.95rem; font-weight: 600; background: #f8fafc; color: #1e293b; outline: none;" />
+      </div>
+      <button onclick="addEntry()" style="background: #18181b; color: #fff; border: none; padding: 0 18px; border-radius: 10px; font-size: 0.92rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 4px; white-space: nowrap;">
+        ＋ 記一筆
+      </button>
+    </div>
+
+    <!-- 人員選擇 ＆ 付款方式標籤群 -->
+    <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 20px;">
+      
+      <!-- 人員切換 (預設名稱可直接在代碼更換) -->
+      <div style="display: flex; background: #f1f5f9; padding: 2px; border-radius: 8px; border: 1px solid #e2e8f0;">
+        <button id="personBtn1" onclick="setPerson('老公')" style="padding: 6px 14px; border: none; border-radius: 6px; font-size: 0.82rem; font-weight: 700; cursor: pointer; background: #dc2626; color: #fff;">
+          老公
+        </button>
+        <button id="personBtn2" onclick="setPerson('老婆')" style="padding: 6px 14px; border: none; border-radius: 6px; font-size: 0.82rem; font-weight: 700; cursor: pointer; background: transparent; color: #64748b;">
+          老婆
+        </button>
+      </div>
+
+      <!-- 付款方式切換 -->
+      <div style="display: flex; background: #f1f5f9; padding: 2px; border-radius: 8px; border: 1px solid #e2e8f0;">
+        <button id="payCashBtn" onclick="setPayment('現金')" style="padding: 6px 12px; border: none; border-radius: 6px; font-size: 0.82rem; font-weight: 700; cursor: pointer; background: #18181b; color: #fff;">
+          💵 現金
+        </button>
+        <button id="payCardBtn" onclick="setPayment('信用卡')" style="padding: 6px 12px; border: none; border-radius: 6px; font-size: 0.82rem; font-weight: 700; cursor: pointer; background: transparent; color: #64748b;">
+          💳 信用卡
+        </button>
+      </div>
+
+    </div>
+
+    <!-- 記帳明細列表容器 -->
+    <div id="entriesList" style="margin-bottom: 20px;">
+      <!-- 若無資料顯示「還沒有記帳，開始記第一筆吧！」 -->
+    </div>
+
+    <!-- 深色結算狀態列看板 (完全復刻原圖) -->
+    <div style="background: #18181b; color: #ffffff; border-radius: 12px; padding: 14px 16px; margin-bottom: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+      <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 4px;">
+        <div style="font-size: 0.95rem; font-weight: 800; display: flex; align-items: center; gap: 6px;">
+          <span>💰</span> 現金剩餘 S$ <span id="cashRemainDisplay">0.0</span>
+          <span style="font-size: 0.82rem; color: #a1a1aa; font-weight: 600;" id="cashRemainTwdDisplay">(≈NT$0)</span>
+        </div>
+      </div>
+      <div style="font-size: 0.75rem; color: #a1a1aa; margin-top: 6px; display: flex; justify-content: space-between;">
+        <span>💳 信用卡刷卡總額: S$ <span id="cardTotalDisplay">0.0</span> <span id="cardTotalTwdDisplay">(≈NT$0)</span></span>
+      </div>
+    </div>
+
+    <!-- 匯出帳目 CSV 按鈕 -->
+    <button onclick="exportToCSV()" style="width: 100%; box-sizing: border-box; background: #ffffff; color: #18181b; border: 1.5px solid #18181b; padding: 12px; border-radius: 10px; font-size: 0.95rem; font-weight: 800; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+      ⬇️ 匯出帳目 (CSV)
+    </button>
+
   </div>
 
-  <!-- 消費記錄清單 -->
-  <div class="card" style="box-sizing: border-box; min-height: 180px;">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-      <h2 class="card-title" style="font-size: 1rem; margin-bottom: 0;">📋 消費明細列表</h2>
-      <button onclick="clearAllRecords()" style="font-size: 0.72rem; color: #94a3b8; background: none; border: none; cursor: pointer; text-decoration: underline;">清空全部</button>
-    </div>
-
-    <div id="recordsList" style="margin-top: 8px; display: flex; flex-direction: column; gap: 8px;">
-      <!-- 動態插入記錄 -->
-    </div>
-  </div>
+  <!-- 底部備註警語 (完全復刻原設計) -->
+  <p style="font-size: 0.74rem; color: #94a3b8; line-height: 1.5; padding: 0 4px;">
+    * 資料自動保存在這支手機的瀏覽器裡（Safari/Chrome 開啟時有效）。台幣換算使用上方的即時匯率。匯出的 CSV 可用 Excel / Google Sheet / Numbers 開啟，也可存檔備份或分享給同行者。
+  </p>
 
 </div>
 
 <script>
+  // 記帳器核心狀態
+  let currentPerson = '老公';
+  let currentPayment = '現金';
+
   function initAccountBook() {
-    renderRecords();
-    updateSummary();
+    // 讀取已存預算
+    const budget = localStorage.getItem('f1_trip_cash_budget') || '1500';
+    document.getElementById('budgetDisplay').innerText = budget;
+
+    renderEntries();
+    updateCalculations();
   }
 
-  function getRecords() {
-    return JSON.parse(localStorage.getItem('f1_trip_expenses') || '[]');
+  // 匯率雙向轉換器
+  function onRateChange() {
+    convertFromSgd();
+    updateCalculations();
   }
 
-  function saveRecords(records) {
-    localStorage.setItem('f1_trip_expenses', JSON.stringify(records));
+  function convertFromSgd() {
+    const rate = parseFloat(document.getElementById('calcRate').value) || 24.5;
+    const sgd = parseFloat(document.getElementById('convSgd').value);
+    if (!isNaN(sgd)) {
+      document.getElementById('convTwd').value = Math.round(sgd * rate);
+    } else {
+      document.getElementById('convTwd').value = '';
+    }
   }
 
-  function addRecord() {
-    const item = document.getElementById('accItem').value.trim();
-    const amount = parseFloat(document.getElementById('accAmount').value);
-    const category = document.getElementById('accCategory').value;
-    const currency = document.getElementById('accCurrency').value;
+  function convertFromTwd() {
+    const rate = parseFloat(document.getElementById('calcRate').value) || 24.5;
+    const twd = parseFloat(document.getElementById('convTwd').value);
+    if (!isNaN(twd)) {
+      document.getElementById('convSgd').value = (twd / rate).toFixed(1);
+    } else {
+      document.getElementById('convSgd').value = '';
+    }
+  }
 
-    if (!item || isNaN(amount) || amount <= 0) {
-      alert('請填寫完整項目名稱與有效金額！');
+  // 人員切換
+  function setPerson(person) {
+    currentPerson = person;
+    const btn1 = document.getElementById('personBtn1');
+    const btn2 = document.getElementById('personBtn2');
+    if (person === '老公') {
+      btn1.style.background = '#dc2626';
+      btn1.style.color = '#fff';
+      btn2.style.background = 'transparent';
+      btn2.style.color = '#64748b';
+    } else {
+      btn2.style.background = '#dc2626';
+      btn2.style.color = '#fff';
+      btn1.style.background = 'transparent';
+      btn1.style.color = '#64748b';
+    }
+  }
+
+  // 付款方式切換
+  function setPayment(payment) {
+    currentPayment = payment;
+    const cashBtn = document.getElementById('payCashBtn');
+    const cardBtn = document.getElementById('payCardBtn');
+    if (payment === '現金') {
+      cashBtn.style.background = '#18181b';
+      cashBtn.style.color = '#fff';
+      cardBtn.style.background = 'transparent';
+      cardBtn.style.color = '#64748b';
+    } else {
+      cardBtn.style.background = '#18181b';
+      cardBtn.style.color = '#fff';
+      cashBtn.style.background = 'transparent';
+      cashBtn.style.color = '#64748b';
+    }
+  }
+
+  // 修改準備現金總額
+  function editTotalBudget() {
+    const current = localStorage.getItem('f1_trip_cash_budget') || '1500';
+    const val = prompt('請輸入此趟旅程準備的【新幣現金總額】(SGD):', current);
+    if (val !== null && !isNaN(parseFloat(val))) {
+      localStorage.setItem('f1_trip_cash_budget', parseFloat(val));
+      document.getElementById('budgetDisplay').innerText = parseFloat(val);
+      updateCalculations();
+    }
+  }
+
+  // 本地存取
+  function getEntries() {
+    return JSON.parse(localStorage.getItem('f1_trip_account_entries') || '[]');
+  }
+
+  function saveEntries(entries) {
+    localStorage.setItem('f1_trip_account_entries', JSON.stringify(entries));
+  }
+
+  // 新增一筆
+  function addEntry() {
+    const itemInput = document.getElementById('entryItem');
+    const amountInput = document.getElementById('entryAmount');
+    const item = itemInput.value.trim();
+    const amount = parseFloat(amountInput.value);
+
+    if (!item) {
+      alert('請填寫項目名稱！');
+      return;
+    }
+    if (isNaN(amount) || amount <= 0) {
+      alert('請填寫正確金額！');
       return;
     }
 
-    const records = getRecords();
-    records.unshift({
+    const entries = getEntries();
+    entries.unshift({
       id: Date.now(),
-      item,
-      amount,
-      category,
-      currency,
+      item: item,
+      amount: amount,
+      person: currentPerson,
+      payment: currentPayment,
       date: new Date().toLocaleDateString('zh-TW', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' })
     });
 
-    saveRecords(records);
-    document.getElementById('accItem').value = '';
-    document.getElementById('accAmount').value = '';
-    renderRecords();
-    updateSummary();
+    saveEntries(entries);
+    itemInput.value = '';
+    amountInput.value = '';
+
+    renderEntries();
+    updateCalculations();
   }
 
-  function deleteRecord(id) {
-    let records = getRecords();
-    records = records.filter(r => r.id !== id);
-    saveRecords(records);
-    renderRecords();
-    updateSummary();
+  // 刪除一筆
+  function deleteEntry(id) {
+    let entries = getEntries();
+    entries = entries.filter(e => e.id !== id);
+    saveEntries(entries);
+    renderEntries();
+    updateCalculations();
   }
 
-  function clearAllRecords() {
-    if (confirm('確定要清空所有記帳明細嗎？')) {
-      localStorage.removeItem('f1_trip_expenses');
-      renderRecords();
-      updateSummary();
-    }
-  }
+  // 渲染清單
+  function renderEntries() {
+    const container = document.getElementById('entriesList');
+    if (!container) return;
+    const entries = getEntries();
+    const rate = parseFloat(document.getElementById('calcRate')?.value || 24.5);
 
-  function renderRecords() {
-    const list = document.getElementById('recordsList');
-    if (!list) return;
-    const records = getRecords();
-
-    if (records.length === 0) {
-      list.innerHTML = `<div style="text-align: center; color: #94a3b8; font-size: 0.85rem; padding: 25px 0;">尚無消費記錄，點擊上方開始記錄！</div>`;
+    if (entries.length === 0) {
+      container.innerHTML = `
+        <div style="text-align: center; color: #64748b; font-size: 0.88rem; padding: 26px 0;">
+          還沒有記帳，開始記第一筆吧！
+        </div>
+      `;
       return;
     }
 
-    list.innerHTML = records.map(r => `
-      <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; background: #f8fafc; border-radius: 8px; border: 1px solid #f1f5f9; box-sizing: border-box;">
+    container.innerHTML = entries.map(e => `
+      <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; margin-bottom: 6px; background: #f8fafc; border-radius: 10px; border: 1px solid #f1f5f9;">
         <div>
-          <div style="font-weight: 600; font-size: 0.88rem; color: #1e293b;">${r.category} ${r.item}</div>
-          <div style="font-size: 0.7rem; color: #94a3b8;">${r.date}</div>
-        </div>
-        <div style="display: flex; align-items: center; gap: 8px;">
-          <div style="font-weight: 700; font-size: 0.92rem; color: ${r.currency === 'SGD' ? '#0284c7' : '#059669'};">
-            ${r.currency === 'SGD' ? '$' : 'NT$'} ${r.amount.toFixed(1)}
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span style="font-size: 0.72rem; padding: 1px 6px; border-radius: 4px; font-weight: 700; ${e.person === '老公' ? 'background: #fee2e2; color: #dc2626;' : 'background: #fef3c7; color: #d97706;'}">${e.person}</span>
+            <span style="font-size: 0.72rem; padding: 1px 6px; border-radius: 4px; font-weight: 600; background: #e2e8f0; color: #475569;">${e.payment === '現金' ? '💵 現金' : '💳 信用卡'}</span>
+            <span style="font-weight: 700; font-size: 0.9rem; color: #1e293b;">${e.item}</span>
           </div>
-          <button onclick="deleteRecord(${r.id})" style="border: none; background: none; color: #cbd5e1; cursor: pointer; font-size: 0.9rem;">✕</button>
+          <div style="font-size: 0.7rem; color: #94a3b8; margin-top: 3px;">${e.date}</div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="text-align: right;">
+            <div style="font-weight: 800; font-size: 0.95rem; color: #0f172a;">S$ ${e.amount.toFixed(1)}</div>
+            <div style="font-size: 0.7rem; color: #94a3b8;">≈NT$${Math.round(e.amount * rate).toLocaleString()}</div>
+          </div>
+          <button onclick="deleteEntry(${e.id})" style="border: none; background: transparent; color: #cbd5e1; cursor: pointer; font-size: 1rem; padding: 2px;">✕</button>
         </div>
       </div>
     `).join('');
   }
 
-  function updateSummary() {
-    const records = getRecords();
-    const fxRate = parseFloat(document.getElementById('fxRate')?.value || 24.5);
-    let totalSGD = 0;
-    let totalTWD = 0;
+  // 更新剩餘現金與信用卡總計
+  function updateCalculations() {
+    const entries = getEntries();
+    const budget = parseFloat(localStorage.getItem('f1_trip_cash_budget') || '1500');
+    const rate = parseFloat(document.getElementById('calcRate')?.value || 24.5);
 
-    records.forEach(r => {
-      if (r.currency === 'SGD') {
-        totalSGD += r.amount;
-        totalTWD += r.amount * fxRate;
+    let cashSpent = 0;
+    let cardSpent = 0;
+
+    entries.forEach(e => {
+      if (e.payment === '現金') {
+        cashSpent += e.amount;
       } else {
-        totalTWD += r.amount;
-        totalSGD += r.amount / fxRate;
+        cardSpent += e.amount;
       }
     });
 
-    const sgdEl = document.getElementById('totalSGD');
-    const twdEl = document.getElementById('totalTWD');
-    if (sgdEl) sgdEl.innerText = `$ ${totalSGD.toFixed(2)}`;
-    if (twdEl) twdEl.innerText = `NT$ ${Math.round(totalTWD).toLocaleString()}`;
+    const cashRemain = budget - cashSpent;
+    const cashRemainEl = document.getElementById('cashRemainDisplay');
+    const cashRemainTwdEl = document.getElementById('cashRemainTwdDisplay');
+    const cardTotalEl = document.getElementById('cardTotalDisplay');
+    const cardTotalTwdEl = document.getElementById('cardTotalTwdDisplay');
+
+    if (cashRemainEl) {
+      cashRemainEl.innerText = cashRemain.toFixed(1);
+      cashRemainEl.style.color = cashRemain < 0 ? '#f87171' : '#ffffff';
+    }
+    if (cashRemainTwdEl) {
+      cashRemainTwdEl.innerText = `(≈NT$${Math.round(cashRemain * rate).toLocaleString()})`;
+    }
+
+    if (cardTotalEl) {
+      cardTotalEl.innerText = cardSpent.toFixed(1);
+    }
+    if (cardTotalTwdEl) {
+      cardTotalTwdEl.innerText = `(≈NT$${Math.round(cardSpent * rate).toLocaleString()})`;
+    }
   }
 
+  // 匯出 CSV 功能
+  function exportToCSV() {
+    const entries = getEntries();
+    if (entries.length === 0) {
+      alert('目前沒有任何記帳明細可以匯出！');
+      return;
+    }
+
+    const rate = parseFloat(document.getElementById('calcRate')?.value || 24.5);
+    let csvContent = '\uFEFF時間,付款人,支付方式,項目名稱,新幣金額(SGD),折合台幣(TWD)\n';
+
+    entries.forEach(e => {
+      const twd = Math.round(e.amount * rate);
+      csvContent += `"${e.date}","${e.person}","${e.payment}","${e.item.replace(/"/g, '""')}","${e.amount}","${twd}"\n`;
+    });
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.setAttribute('href', url);
+    link.setAttribute('download', `F1_Singapore_Expenses_${new Date().toISOString().slice(0,10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
+  // 初始化執行
   initAccountBook();
 </script>
