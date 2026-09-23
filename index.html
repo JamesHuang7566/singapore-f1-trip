@@ -33,17 +33,17 @@
       padding-bottom: 60px;
     }
 
-    /* 頂部固定 Header 區域 */
+    /* 頂部固定 Header */
     header {
       background: linear-gradient(135deg, #0b0f19 0%, #1e293b 100%);
       color: #fff;
-      padding: 24px 16px 18px;
+      padding: 22px 16px 16px;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
     }
 
     .header-top {
       text-align: center;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
 
     .header-badge {
@@ -60,7 +60,7 @@
     }
 
     header h1 {
-      font-size: 1.45rem;
+      font-size: 1.4rem;
       font-weight: 800;
       letter-spacing: 0.5px;
       margin-bottom: 2px;
@@ -126,11 +126,11 @@
       color: #94a3b8;
     }
 
-    /* 導航 Tabs 欄位 */
+    /* 導航 Tabs 欄位：改為全展開網格（不需橫向滑動） */
     .tabs-wrapper {
       position: sticky;
       top: 0;
-      background: rgba(248, 250, 252, 0.95);
+      background: rgba(248, 250, 252, 0.98);
       backdrop-filter: blur(10px);
       z-index: 100;
       border-bottom: 1px solid var(--border);
@@ -140,33 +140,31 @@
     .container {
       max-width: 760px;
       margin: 0 auto;
-      padding: 0 16px;
+      padding: 0 14px;
     }
 
-    .tabs {
+    .tabs-grid {
       display: flex;
-      overflow-x: auto;
-      white-space: nowrap;
+      flex-wrap: wrap;
+      gap: 6px;
       padding: 10px 0;
-      gap: 8px;
-      scrollbar-width: none;
-    }
-
-    .tabs::-webkit-scrollbar {
-      display: none;
+      justify-content: space-between;
     }
 
     .tab-btn {
-      padding: 7px 14px;
+      flex: 1 1 calc(25% - 6px); /* 在手機上一排約 4 個，共兩排 */
+      min-width: 72px;
+      padding: 8px 4px;
       border: 1px solid var(--border);
-      border-radius: 20px;
+      border-radius: 8px;
       background: #fff;
       color: var(--text-muted);
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 600;
+      text-align: center;
       cursor: pointer;
-      transition: all 0.2s ease;
-      flex-shrink: 0;
+      transition: all 0.18s ease;
+      white-space: nowrap;
     }
 
     .tab-btn.active {
@@ -191,7 +189,7 @@
 
     /* 動態載入容器 */
     #content-container {
-      margin-top: 18px;
+      margin-top: 16px;
       min-height: 450px;
       animation: fadeIn 0.25s ease-in-out;
     }
@@ -392,16 +390,16 @@
     </div>
   </header>
 
-  <!-- 導航列：Day 1 ~ Day 5 + 資訊 + 記帳 -->
+  <!-- 導航列：全展開網格，資訊置於首位，無需橫向滑動 -->
   <div class="tabs-wrapper">
     <div class="container">
-      <div class="tabs">
-        <button class="tab-btn active" onclick="loadPage('day1.html', this)">10/8 (四) Day 1</button>
-        <button class="tab-btn" onclick="loadPage('day2.html', this)">10/9 (五) Day 2</button>
-        <button class="tab-btn" onclick="loadPage('day3.html', this)">10/10 (六) Day 3</button>
-        <button class="tab-btn" onclick="loadPage('day4.html', this)">10/11 (日) Day 4</button>
-        <button class="tab-btn" onclick="loadPage('day5.html', this)">10/12 (一) Day 5</button>
-        <button class="tab-btn special-tab" onclick="loadPage('info.html', this)">ℹ️ 資訊</button>
+      <div class="tabs-grid">
+        <button class="tab-btn special-tab active" onclick="loadPage('info.html', this)">ℹ️ 資訊</button>
+        <button class="tab-btn" onclick="loadPage('day1.html', this)">10/8 D1</button>
+        <button class="tab-btn" onclick="loadPage('day2.html', this)">10/9 D2</button>
+        <button class="tab-btn" onclick="loadPage('day3.html', this)">10/10 D3</button>
+        <button class="tab-btn" onclick="loadPage('day4.html', this)">10/11 D4</button>
+        <button class="tab-btn" onclick="loadPage('day5.html', this)">10/12 D5</button>
         <button class="tab-btn special-tab" onclick="loadPage('account.html', this)">💰 記帳</button>
       </div>
     </div>
@@ -422,7 +420,6 @@
       buttons.forEach(btn => btn.classList.remove('active'));
       if (btnElement) {
         btnElement.classList.add('active');
-        btnElement.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
       }
 
       // 2. 非同步載入 HTML
@@ -443,10 +440,10 @@
       }
     }
 
-    // 預設載入 Day 1
+    // 預設一開啟直接載入第一個【資訊頁面 info.html】
     document.addEventListener('DOMContentLoaded', () => {
       const firstBtn = document.querySelector('.tab-btn');
-      loadPage('day1.html', firstBtn);
+      loadPage('info.html', firstBtn);
     });
   </script>
 
