@@ -414,14 +414,14 @@
     </div>
   </header>
 
-  <!-- 導航列 -->
+  <!-- 導航列：預設高亮選中 D1 抵達日 -->
   <div class="tabs-wrapper">
     <div class="container">
       <div class="tabs-grid">
-        <button class="tab-btn special-tab active" onclick="loadPage('info.html', this)">
+        <button class="tab-btn special-tab" onclick="loadPage('info.html', this)">
           <span class="btn-main">ℹ️ 資訊</span>
         </button>
-        <button class="tab-btn" onclick="loadPage('day1.html', this)">
+        <button id="tab-day1" class="tab-btn active" onclick="loadPage('day1.html', this)">
           <span class="btn-top">D1 抵達日</span>
           <span class="btn-main">10/8(四)</span>
         </button>
@@ -489,8 +489,8 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      const firstBtn = document.querySelector('.tab-btn');
-      loadPage('info.html', firstBtn);
+      const day1Btn = document.getElementById('tab-day1');
+      loadPage('day1.html', day1Btn);
     });
   </script>
 
