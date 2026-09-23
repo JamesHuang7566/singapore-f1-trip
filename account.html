@@ -1,11 +1,11 @@
-<div class="account-wrapper" style="display: flex; flex-direction: column; gap: 16px;">
+<div class="account-wrapper" style="display: flex; flex-direction: column; gap: 16px; width: 100%; box-sizing: border-box;">
 
   <!-- 匯率與總額統計看板 -->
-  <div class="card" style="background: linear-gradient(135deg, #1e293b, #0f172a); color: #fff; border: none;">
+  <div class="card" style="background: linear-gradient(135deg, #1e293b, #0f172a); color: #fff; border: none; box-sizing: border-box;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
       <span style="font-size: 0.8rem; color: #94a3b8; font-weight: 600;">消費總額統計</span>
       <div style="font-size: 0.75rem; color: #cbd5e1; display: flex; align-items: center; gap: 4px;">
-        匯率: 1 SGD ≈ <input type="number" id="fxRate" value="24.5" step="0.1" style="width: 50px; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); border-radius: 4px; color: #fff; text-align: center; font-size: 0.75rem;" onchange="updateSummary()" /> TWD
+        匯率: 1 SGD ≈ <input type="number" id="fxRate" value="24.5" step="0.1" style="width: 52px; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); border-radius: 4px; color: #fff; text-align: center; font-size: 0.75rem; box-sizing: border-box;" onchange="updateSummary()" /> TWD
       </div>
     </div>
 
@@ -23,10 +23,10 @@
   </div>
 
   <!-- 新增記帳表單 -->
-  <div class="card">
+  <div class="card" style="box-sizing: border-box;">
     <h2 class="card-title" style="font-size: 1rem;">➕ 新增消費支出</h2>
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px;">
-      <select id="accCategory" style="padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem; background: #fff;">
+      <select id="accCategory" style="width: 100%; box-sizing: border-box; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem; background: #fff;">
         <option value="🍽️ 餐飲">🍽️ 餐飲美食</option>
         <option value="🚕 交通">🚕 交通接駁</option>
         <option value="🛍️ 購物">🛍️ 紀念購物</option>
@@ -35,22 +35,22 @@
         <option value="📦 其他">📦 其他支出</option>
       </select>
 
-      <select id="accCurrency" style="padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem; background: #fff;">
+      <select id="accCurrency" style="width: 100%; box-sizing: border-box; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem; background: #fff;">
         <option value="SGD">新幣 (SGD)</option>
         <option value="TWD">台幣 (TWD)</option>
       </select>
     </div>
 
     <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 8px; margin-top: 8px;">
-      <input type="text" id="accItem" placeholder="項目名稱 (例如: 亞坤早餐)" style="padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem;" />
-      <input type="number" id="accAmount" placeholder="金額" step="0.1" style="padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem;" />
+      <input type="text" id="accItem" placeholder="項目名稱 (例如: 亞坤早餐)" style="width: 100%; box-sizing: border-box; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem;" />
+      <input type="number" id="accAmount" placeholder="金額" step="0.1" style="width: 100%; box-sizing: border-box; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.85rem;" />
     </div>
 
-    <button onclick="addRecord()" style="margin-top: 10px; width: 100%; background: var(--primary); color: #fff; border: none; padding: 9px; border-radius: 8px; font-weight: 700; font-size: 0.9rem; cursor: pointer;">加入明細</button>
+    <button onclick="addRecord()" style="margin-top: 10px; width: 100%; box-sizing: border-box; background: var(--primary); color: #fff; border: none; padding: 9px; border-radius: 8px; font-weight: 700; font-size: 0.9rem; cursor: pointer;">加入明細</button>
   </div>
 
   <!-- 消費記錄清單 -->
-  <div class="card">
+  <div class="card" style="box-sizing: border-box; min-height: 180px;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
       <h2 class="card-title" style="font-size: 1rem; margin-bottom: 0;">📋 消費明細列表</h2>
       <button onclick="clearAllRecords()" style="font-size: 0.72rem; color: #94a3b8; background: none; border: none; cursor: pointer; text-decoration: underline;">清空全部</button>
@@ -64,7 +64,6 @@
 </div>
 
 <script>
-  // 記帳模組邏輯
   function initAccountBook() {
     renderRecords();
     updateSummary();
@@ -128,12 +127,12 @@
     const records = getRecords();
 
     if (records.length === 0) {
-      list.innerHTML = `<div style="text-align: center; color: #94a3b8; font-size: 0.85rem; padding: 20px 0;">尚無消費記錄，點擊上方開始記錄！</div>`;
+      list.innerHTML = `<div style="text-align: center; color: #94a3b8; font-size: 0.85rem; padding: 25px 0;">尚無消費記錄，點擊上方開始記錄！</div>`;
       return;
     }
 
     list.innerHTML = records.map(r => `
-      <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; background: #f8fafc; border-radius: 8px; border: 1px solid #f1f5f9;">
+      <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; background: #f8fafc; border-radius: 8px; border: 1px solid #f1f5f9; box-sizing: border-box;">
         <div>
           <div style="font-weight: 600; font-size: 0.88rem; color: #1e293b;">${r.category} ${r.item}</div>
           <div style="font-size: 0.7rem; color: #94a3b8;">${r.date}</div>
@@ -170,6 +169,5 @@
     if (twdEl) twdEl.innerText = `NT$ ${Math.round(totalTWD).toLocaleString()}`;
   }
 
-  // 確保載入時初次觸發
   initAccountBook();
 </script>
