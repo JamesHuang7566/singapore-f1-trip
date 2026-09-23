@@ -69,7 +69,7 @@
       padding: 0 16px;
     }
 
-    /* 日期導航 Tabs */
+    /* 頂部導航 Tabs 固定置頂 */
     .tabs-wrapper {
       position: sticky;
       top: 0;
@@ -113,14 +113,10 @@
       box-shadow: 0 2px 8px rgba(211, 47, 47, 0.3);
     }
 
-    /* 天數容器隱藏與顯示 */
-    .day-content {
-      display: none;
+    /* 動態載入容器 */
+    #content-container {
+      min-height: 400px;
       animation: fadeIn 0.25s ease-in-out;
-    }
-
-    .day-content.active {
-      display: block;
     }
 
     @keyframes fadeIn {
@@ -128,7 +124,7 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* 時間軸卡片結構 */
+    /* 時間軸與卡片共用樣式 */
     .timeline {
       position: relative;
       padding-left: 28px;
@@ -273,616 +269,31 @@
     <div class="badge-f1">F1 Singapore GP • Skyline Grandstand</div>
   </header>
 
-  <!-- 日期切換 Tabs -->
+  <!-- 頂部固定 Tab 導航 -->
   <div class="tabs-wrapper">
     <div class="container">
       <div class="tabs">
-        <button class="tab-btn active" onclick="switchDay(1)">10/8 (四) Day 1</button>
-        <button class="tab-btn" onclick="switchDay(2)">10/9 (五) Day 2</button>
-        <button class="tab-btn" onclick="switchDay(3)">10/10 (六) Day 3</button>
-        <button class="tab-btn" onclick="switchDay(4)">10/11 (日) Day 4</button>
-        <button class="tab-btn" onclick="switchDay(5)">10/12 (一) Day 5</button>
+        <button class="tab-btn active" onclick="loadDay(1)">10/8 (四) Day 1</button>
+        <button class="tab-btn" onclick="loadDay(2)">10/9 (五) Day 2</button>
+        <button class="tab-btn" onclick="loadDay(3)">10/10 (六) Day 3</button>
+        <button class="tab-btn" onclick="loadDay(4)">10/11 (日) Day 4</button>
+        <button class="tab-btn" onclick="loadDay(5)">10/12 (一) Day 5</button>
       </div>
     </div>
   </div>
 
   <main class="container">
-
-    <!-- ==================== DAY 1 (10/8 週四) ==================== -->
-    <div class="day-content active" id="day-1">
-      <div class="timeline">
-
-        <div class="timeline-item">
-          <div class="card">
-            <span class="card-time">09:25 - 13:55</span>
-            <h2 class="card-title">✈️ 啟程飛往新加坡</h2>
-            <div class="card-content">
-              <p><strong>航班：</strong>長榮航空 BR215（桃園 T2 ➔ 樟宜 T3）</p>
-              <ul>
-                <li>13:55 準時降落樟宜機場第三航廈，通關並提領行李。</li>
-                <li>開啟 eSIM / 漫遊網路，準備出發探索星耀樟宜！</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="card">
-            <span class="card-time">14:40 - 15:00</span>
-            <h2 class="card-title">📸 Skytrain 瀑布空中機位</h2>
-            <div class="card-content">
-              <ul>
-                <li>從 T3 搭乘接駁輕軌 <strong>Skytrain 往 T2</strong>。</li>
-                <li><strong>關鍵技巧：</strong>站在<strong>車廂右側</strong>，列車穿過 Jewel 時能以高空視角直擊「雨漩渦室內瀑布」。</li>
-                <li>抵達 T2 後依指標走冷氣連通道步行直通星耀樟宜（Jewel）。</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="card">
-            <span class="card-time">15:00 - 17:00</span>
-            <h2 class="card-title">💎 星耀樟宜慢逛 ＆ 口袋名單全搜集</h2>
-            <div class="card-content">
-              <ul>
-                <li><strong>寄放大行李：</strong>先到 Jewel 1 樓的 Baggage Storage 寄存大行李，兩手空空最輕鬆。</li>
-                <li><strong>瀑布合影：</strong>在資生堂森林谷與 40 米高的雨漩渦打卡合照。</li>
-                <li><strong>重點必訪：</strong>直奔 <strong>4 樓 Pokémon Center Singapore</strong>，入手新加坡限定機長/空服員皮卡丘！</li>
-                <li><strong>口袋美食清單（依喜好彈性品嚐）：</strong></li>
-              </ul>
-              <div class="tag-list">
-                <span class="tag highlight">必逛：Pokemon Center (4F)</span>
-                <span class="tag">松發肉骨茶 (B2)</span>
-                <span class="tag">Shake Shack 漢堡 (2F)</span>
-                <span class="tag">%Arabica 咖啡 (1F)</span>
-                <span class="tag">Mr Coconut 椰子冰沙 (B2)</span>
-                <span class="tag">亞坤咖椰吐司 (1F)</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="card">
-            <span class="card-time">17:00 - 18:00</span>
-            <h2 class="card-title">🚕 前往飯店：Village Hotel Bugis</h2>
-            <div class="card-content">
-              <ul>
-                <li><strong>計程車 / Grab（推薦）：</strong>取行李後叫車，走 ECP 高速車程約 25–30 分鐘，直達飯店門口。</li>
-                <li><strong>地鐵 MRT：</strong>搭綠線至丹那美拉站（Tanah Merah）同台轉乘往市區方向至 <strong>Bugis 站（EW12）</strong>，步行 5 分鐘抵達。</li>
-              </ul>
-            </div>
-            <div class="notice-box">
-              🏨 <strong>住宿：</strong>Village Hotel Bugis (390 Victoria St)<br>
-              緊鄰武吉士商圈，步行過馬路即達甘榜格南阿拉伯區！
-            </div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="card">
-            <span class="card-time">18:30 - 20:00</span>
-            <h2 class="card-title">🍽️ 甘榜格南特色在地晚餐</h2>
-            <div class="card-content">
-              <ul>
-                <li><strong>百年老店 Singapore Zam Zam：</strong>就在蘇丹回教堂正對面，必點招牌現煎「牛肉/雞肉印度餡餅（Murtabak）」配濃咖哩醬，搭香濃冰拉茶。</li>
-                <li><strong>巴梭拉街風味：</strong>整排中東炭烤肉串（Kebab）與香料料理。</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="card">
-            <span class="card-time">20:00 - 21:30</span>
-            <h2 class="card-title">🕌 阿拉伯區精華夜遊三部曲</h2>
-            <div class="card-content">
-              <ul>
-                <li><strong>第 1 站｜蘇丹回教堂（Sultan Mosque）：</strong>欣賞金黃色暖光打亮的巨大金色圓頂與棕櫚街夜景。</li>
-                <li><strong>第 2 站｜哈芝巷（Haji Lane）：</strong>穿梭色彩鮮明的大幅街頭彩繪塗鴉牆，感受露天酒吧音樂與文創選物店潮流氛圍。</li>
-                <li><strong>第 3 站｜峇里巷（Bali Lane）：</strong>較為靜謐的特色巷弄，適合挑間義式手工冰淇淋（Gelato）或特色飲品坐下來歇腳。</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- ==================== DAY 2 (10/9 週五) ==================== -->
-    <div class="day-content" id="day-2">
-      <div class="timeline">
-
-        <div class="timeline-item">
-          <div class="card">
-            <span class="card-time">09:30 - 10:15</span>
-            <h2 class="card-title">☕ 早餐：亞坤咖椰吐司（極簡輕食）</h2>
-            <div class="card-content">
-              <ul>
-                <li>睡飽出門！至飯店斜對面 Bugis Junction 分店。</li>
-                <li><strong>配餐原則：</strong>中午有高飽足度肉骨茶，早餐兩人分食一份現烤炭烤咖椰牛油吐司，點兩杯熱咖啡（Kopi），清爽墊胃。</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="card">
-            <span class="card-time">10:15 - 11:45</span>
-            <h2 class="card-title">🦁 魚尾獅公園打卡街拍（上午順光）</h2>
-            <div class="card-content">
-              <ul>
-                <li><strong>交通：</strong>搭 MRT 至萊佛士坊站（Raffles Place），步行穿過水岸步道抵達。</li>
-                <li><strong>最佳視角：</strong>上午順光且人潮較少，水岸看台拍攝經典「魚尾獅接水借位照」，背景完美納入金沙飯店全景。</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="card">
-            <span class="card-time">12:00 - 13:30</span>
-            <h2 class="card-title">🍲 午餐：松發肉骨茶（克拉碼頭總店）</h2>
-            <div class="card-content">
-              <ul>
-                <li><strong>美味重點：</strong>招牌濃郁白胡椒蒜香排骨熱湯（肉質軟嫩、<strong>可無限免費續熱湯</strong>）配油條。</li>
-                <li><strong>順道街拍：</strong>正對面即是擁有 927 扇彩虹百葉窗的「舊禧街警察局」，過馬路拍 5 分鐘極美！</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="card">
-            <span class="card-time">14:00 - 15:30</span>
-            <h2 class="card-title">🏎️ 參觀 The Formula 1® Exhibition 特展</h2>
-            <div class="card-content">
-              <ul>
-                <li><strong>地點：</strong>濱海灣花園（近 Satay by the Bay / 東側展區）。</li>
-                <li><strong>亮點：</strong>7 大主題展廳，近距離欣賞傳奇賽車工藝，以及 Grosjean 2020 年烈火撞毀生還的 Haas 賽車座艙殘骸！</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="card">
-            <span class="card-time">15:30 - 16:30</span>
-            <h2 class="card-title">🌿 濱海灣花園：雲霧林（Cloud Forest）避暑</h2>
-            <div class="card-content">
-              <ul>
-                <li>全室內空調巨型溫室躲避午後暑氣，欣賞 35 公尺高震撼瀑布與空中步道。</li>
-                <li>遇上 <strong>16:00 定時薄霧噴放（Misting）</strong>，全館山林薄霧瀰漫，拍照效果極佳！</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="card">
-            <span class="card-time">16:30 - 17:00</span>
-            <h2 class="card-title">🚶 穿過金沙空橋進場：Gate 8 直達 Zone 1/2</h2>
-            <div class="card-content">
-              <ul>
-                <li>走花園空橋穿過金沙購物中心吹冷氣，由雙螺旋橋進入賽道 Gate 8（步程約 8 分鐘，完全順路無折返）。</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="card">
-            <span class="card-time">17:00 - 17:45</span>
-            <h2 class="card-title">🎡 趁練習賽黃金空檔：排隊搭乘新加坡摩天輪</h2>
-            <div class="card-content">
-              <ul>
-                <li><strong>低排隊秘訣：</strong>趁 16:30–17:30 Practice 1 期間人潮全湧在看台看車，摩天輪排隊動線最短！</li>
-                <li><strong>Skyline 專屬福利：</strong>免費排隊搭乘「新加坡摩天輪（Singapore Flyer）」，在 165 米高空以「上帝視角」俯瞰賽道呼嘯而過的賽車與海灣日落！</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="card">
-            <span class="card-time">17:45 - 20:15</span>
-            <h2 class="card-title">🍔 賽道村悠閒晚餐 ＆ 漫步休整</h2>
-            <div class="card-content">
-              <ul>
-                <li>在 Zone 1 賽道美食街享用晚餐、補充水分、逛各車隊商品專賣店，從容準備晚間賽事。</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="timeline-item card-f1">
-          <div class="card f1-card">
-            <span class="card-time f1-badge">20:30 - 21:14</span>
-            <h2 class="card-title">⚡ F1 SPRINT QUALIFYING (衝刺排位賽)</h2>
-            <div class="card-content">
-              <ul>
-                <li>Skyline Grandstand 看台正式入座！燈光全開下親睹緊繃的高壓單圈計時生死戰，見證週六衝刺發車席次出爐！</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="card">
-            <span class="card-time">21:45 - 23:30</span>
-            <h2 class="card-title">🍢 老巴剎沙嗲街（Lau Pa Sat）封街露天宵夜</h2>
-            <div class="card-content">
-              <ul>
-                <li><strong>交通：</strong>離場搭 MRT 藍線 2 站至 Telok Ayer 或叫 Grab 直達。</li>
-                <li><strong>特色體驗：</strong>Boon Tat St 晚間全面封街擺桌，點一整盤炭烤牛/羊/雞肉串與烤蝦，沾特調溫熱濃郁花生醬，配杯冰啤酒慶祝！</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- ==================== DAY 3 (10/10 週六) ==================== -->
-    <div class="day-content" id="day-3">
-      <div class="timeline">
-
-        <div class="timeline-item">
-          <div class="card">
-            <span class="card-time">09:30 - 09:45</span>
-            <h2 class="card-title">🚕 出發前往加東（睡飽出發）</h2>
-            <div class="card-content">
-              <ul>
-                <li>睡到自然醒，早晨先在飯店喝杯黑咖啡提神，保留胃容量留給加東點心與中午海南雞飯。</li>
-                <li>飯店門口叫 Grab 直奔加東（車程約 12–15 分鐘）。</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="card">
-            <span class="card-time">09:45 - 10:45</span>
-            <h2 class="card-title">📸 坤成路娘惹彩繪排屋（Peranakan Houses）</h2>
-            <div class="card-content">
-              <ul>
-                <li><strong>街拍重點：</strong>欣賞整排色彩粉嫩、雕花細緻的土生華人歷史排屋，幾何瓷磚與巴洛克式裝飾極具南洋風情。</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="card">
-            <span class="card-time">10:45 - 11:30</span>
-            <h2 class="card-title">🥟 加東精緻點心：金珠肉粽 ＆ 復古麵包店</h2>
-            <div class="card-content">
-              <ul>
-                <li><strong>金珠肉粽（Kim Choo）：</strong>買一顆經典「娘惹肉粽」分食嚐鮮（蝶豆花糯米內餡裹甜鹹香料冬瓜肉碎，份量小巧不油膩），順逛二樓娘惹文物。</li>
-                <li><strong>真美珍咖啡店（Chin Mee Chin）：</strong>隔壁 1950 年代復古老鋪，可品嚐招牌現烤炭烤小圓麵包配熱茶。</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="card">
-            <span class="card-time">11:50 - 13:30</span>
-            <h2 class="card-title">🍗 牛車水麥士威午餐 ＆ 佛牙寺參觀</h2>
-            <div class="card-content">
-              <ul>
-                <li><strong>麥士威熟食中心：</strong>品嚐名店「天天海南雞飯」滑嫩雞肉配香氣四溢雞油飯，搭一杯現榨甘蔗檸檬汁。</li>
-                <li><strong>佛牙寺龍華院：</strong>熟食中心正對面，參觀唐代木構風格寺廟，正殿挑高金碧輝煌，全館空調清幽沈靜。</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="card">
-            <span class="card-time">13:45 - 14:45</span>
-            <h2 class="card-title">🏘️ 安詳山（Ann Siang Hill）/ 客納街文青散策</h2>
-            <div class="card-content">
-              <ul>
-                <li>漫步牛車水旁斜坡特色街區，欣賞修復店屋建築與設計小店，或挑間冷氣風格咖啡館稍作休息。</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="card">
-            <span class="card-time">15:00 - 15:45</span>
-            <h2 class="card-title">🛏️ 回飯店高效換裝沖涼（休整 45 分鐘）</h2>
-            <div class="card-content">
-              <ul>
-                <li>搭 MRT 藍線由 Chinatown 直達 Bugis，回房沖涼、換上輕便服飾、備齊耳塞與隨身小包，補足水分。</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="card">
-            <span class="card-time">16:00 - 16:45</span>
-            <h2 class="card-title">🏎️ 進場探索：Gate 3 直插【Zone 4 車迷大本營】</h2>
-            <div class="card-content">
-              <ul>
-                <li>搭 MRT 1 站至 City Hall，從 Gate 3 出站直達 Zone 4（Padang 綠茵草地）。</li>
-                <li>逛齊 Ferrari、Red Bull、McLaren、Mercedes 等各車隊官方快閃大篷車，體驗換胎挑戰等互動遊戲。</li>
-                <li>順著賽道專屬聯絡步道悠閒走回 Skyline 看台（約 15 分鐘）。</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="card f1-card">
-            <span class="card-time f1-badge">17:00 - 18:00</span>
-            <h2 class="card-title">🏁 F1 SPRINT (衝刺正賽)</h2>
-            <div class="card-content">
-              <ul>
-                <li>約 100 公里短程真刀真槍無進站攻防，前 8 名車手直接爭搶世界冠軍年度積分！</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="card">
-            <span class="card-time">18:00 - 20:30</span>
-            <h2 class="card-title">🍔 賽事空檔：賽道美食享受 ＆ 休整補水</h2>
-            <div class="card-content">
-              <ul>
-                <li>在看台周邊美食街享用晚餐，補充水分稍作休息，準備迎接晚間正賽排位戰。</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="card f1-card">
-            <span class="card-time f1-badge">21:00 - 22:00</span>
-            <h2 class="card-title">⏱️ F1 QUALIFYING (正賽排位賽)</h2>
-            <div class="card-content">
-              <ul>
-                <li>週末最緊繃的極限單圈速度戰！親睹車手在狹窄街道牆邊壓榨圈速，決定週日大獎賽正賽桿位席次！</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- ==================== DAY 4 (10/11 週日) ==================== -->
-    <div class="day-content" id="day-4">
-      <div class="timeline">
-
-        <div class="timeline-item">
-          <div class="card">
-            <span class="card-time">09:30 - 10:15</span>
-            <h2 class="card-title">☕ 早餐：喜園咖啡店（YY Kafei Dian）</h2>
-            <div class="card-content">
-              <ul>
-                <li>飯店步行 6 分鐘直達 Purvis St 名店。</li>
-                <li><strong>美味亮點：</strong>品嚐神級招牌「傳統海南鬆軟厚咖椰吐司」（口感蓬鬆如棉花糖），配半熟蛋與現滴南洋熱咖啡。</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="card">
-            <span class="card-time">10:15 - 11:15</span>
-            <h2 class="card-title">🕌 走進蘇丹回教堂內部參觀</h2>
-            <div class="card-content">
-              <ul>
-                <li>散步回飯店旁，週日上午為非穆斯林開放時段（10:00–12:00）。</li>
-                <li>脫鞋入內（門口可免費借長袍），仰望挑高祈禱大廳與莊嚴金色圓頂建築細節。</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="card">
-            <span class="card-time">11:30 - 13:00</span>
-            <h2 class="card-title">🍸 萊佛士酒店 Long Bar：正宗新加坡司令</h2>
-            <div class="card-content">
-              <ul>
-                <li>步行 10 分鐘即抵達傳奇的萊佛士酒店（Raffles Hotel）。</li>
-                <li>開門時段現場排隊最順暢，坐在發源地品嚐經典「Singapore Sling」，邊吃花生邊豪邁把花生殼踩在地上！</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="card">
-            <span class="card-time">13:00 - 14:15</span>
-            <h2 class="card-title">⛪ 讚美廣場（CHIJMES）漫步 ＆ 歐風午餐</h2>
-            <div class="card-content">
-              <ul>
-                <li><strong>純白修道院：</strong>漫步純白哥德式教堂中庭（電影《瘋狂亞洲富豪》婚禮場景）拍照合影。</li>
-                <li><strong>午餐推薦：</strong>
-                  <ul>
-                    <li>The Masses Singapore（精緻新法式融合南洋料理）</li>
-                    <li>Privé CHIJMES（綠蔭庭園全日歐陸輕食、義大利麵）</li>
-                    <li>New Ubin Seafood（特色黑安格斯肋眼牛排配牛油炒飯）</li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="card">
-            <span class="card-time">14:30 - 15:45</span>
-            <h2 class="card-title">🌿 福康寧公園（Fort Canning Park）樹洞天井街拍</h2>
-            <div class="card-content">
-              <ul>
-                <li>由讚美廣場步行 8 分鐘抵達地下通道入口。</li>
-                <li>打卡超人氣秘境「樹洞天井（Tree Tunnel）」，站在螺旋石階底部由下往上仰拍，巨樹綠蔭與天空交織出絕美光影大片！</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="card">
-            <span class="card-time">16:00 - 16:45</span>
-            <h2 class="card-title">🛏️ 回飯店休整備戰（休整 45 分鐘）</h2>
-            <div class="card-content">
-              <ul>
-                <li>叫車 5 分鐘回飯店，放白天戰利品、補滿水壺、換上夜賽專用服裝。</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="card">
-            <span class="card-time">17:15 - 18:00</span>
-            <h2 class="card-title">🌅 Gate 7 進場漫步【Zone 2 & 3 水岸廊道】</h2>
-            <div class="card-content">
-              <ul>
-                <li>沿綠蔭往南漫步至 Gate 7 進場，沿濱海藝術中心水岸感受全場最沸騰的街頭派對與日落美景，一路走回看台。</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="card f1-card">
-            <span class="card-time f1-badge">18:00 - 18:30</span>
-            <h2 class="card-title">🏎️ 車手巡遊 (Drivers' Parade)</h2>
-            <div class="card-content">
-              <ul>
-                <li>全體 20 位 F1 車手搭乘經典敞篷古董車繞場一圈向看台車迷揮手致意！</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="card">
-            <span class="card-time">18:30 - 19:30</span>
-            <h2 class="card-title">🍔 賽前黃金晚餐：看台後方頂級快閃美食</h2>
-            <div class="card-content">
-              <ul>
-                <li><strong>就近用餐防塞人：</strong>在看台後方（摩天輪基座餐飲區）享用現烤和牛漢堡、炭烤沙嗲或特色熱食，買妥冰鎮啤酒，回座位靜候起跑。</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="card f1-card">
-            <span class="card-time f1-badge">20:00 起跑</span>
-            <h2 class="card-title">🏆 F1 新加坡大獎賽 正賽 (RACE)</h2>
-            <div class="card-content">
-              <ul>
-                <li><strong>20:00 正式起跑：</strong>在 Skyline 看台親歷 62 圈極限夜賽攻防、街道戰與進站博弈！</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="card f1-card">
-            <span class="card-time f1-badge">21:45 賽後體驗</span>
-            <h2 class="card-title">🎆 Track Invasion：踏上真實賽道 ＆ 頒獎台煙火</h2>
-            <div class="card-content">
-              <ul>
-                <li><strong>天選之位：</strong>摩天輪正下方賽道閘門率先開啟，第一波直接踏上剛剛跑完比賽的真實賽道柏油路！</li>
-                <li>沿賽道步行 300 公尺至發車格第 1 位拍照，站在<strong>頒獎台（Podium）正下方</strong>近距離仰望冠亞季軍噴香檳，迎接漫天碎紙花與璀璨煙火！</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- ==================== DAY 5 (10/12 週一) ==================== -->
-    <div class="day-content" id="day-5">
-      <div class="timeline">
-
-        <div class="timeline-item">
-          <div class="card">
-            <span class="card-time">08:30 - 10:15</span>
-            <h2 class="card-title">🛏️ 睡到自然醒 ＆ 整理行李退房</h2>
-            <div class="card-content">
-              <ul>
-                <li>充分補眠消除前晚 F1 正賽的狂歡疲勞。</li>
-                <li>整理戰利品與托運行李，10:15 左右於飯店大廳辦理退房。</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="card">
-            <span class="card-time">10:15 - 10:45</span>
-            <h2 class="card-title">🚕 叫車直奔樟宜機場 T3</h2>
-            <div class="card-content">
-              <ul>
-                <li>飯店門口叫 Grab / 計程車，走 ECP 高速直達第三航廈（T3）。</li>
-                <li>車程約 20 分鐘，兩人帶著大件行李最省力無負擔。</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="card">
-            <span class="card-time">10:45 - 12:30</span>
-            <h2 class="card-title">🛍️ 長榮開櫃託運 ＆ 機場伴手禮採買</h2>
-            <div class="card-content">
-              <ul>
-                <li><strong>報到託運：</strong>長榮 BR226 約 10:40 開櫃，抵達後直接掛行李。</li>
-                <li><strong>免稅伴手禮衝刺：</strong>通關後在 T3 免稅區輕鬆採買（Bacha Coffee、TWG 茶葉、Bengawan Solo 斑蘭蛋糕、IRVINS 鹹蛋黃魚皮），邊逛邊享用輕食咖啡。</li>
-                <li><strong>注意：</strong>咖椰醬若在市區購買記得放託運，免稅店內購買則可直接手提上機。</li>
-              </ul>
-              <div class="tag-list">
-                <span class="tag highlight">Bacha Coffee</span>
-                <span class="tag">Bengawan Solo 斑蘭蛋糕</span>
-                <span class="tag">IRVINS 鹹蛋黃魚皮</span>
-                <span class="tag">TWG Tea</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="card">
-            <span class="card-time">12:30 - 13:10</span>
-            <h2 class="card-title">✈️ 登機門安檢 ＆ 返程台北</h2>
-            <div class="card-content">
-              <p><strong>航班：</strong>長榮航空 BR226（樟宜 T3 13:10 起飛 ➔ 桃園 T2 17:45 抵達）</p>
-              <ul>
-                <li>新加坡機場為「登機門口安檢」，請於 12:30 前抵達登機門進行隨身行李檢查。</li>
-                <li>平安滿載回台灣！</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
+    <!-- 各天內容將動態載入至此 -->
+    <div id="content-container"></div>
   </main>
 
   <footer>
     <p>Have an amazing trip to Singapore! 🏎️💨</p>
   </footer>
 
-  <!-- Tab 切換邏輯 -->
   <script>
-    function switchDay(dayNum) {
+    async function loadDay(dayNum) {
+      // 1. 切換按鈕 active 樣式
       const buttons = document.querySelectorAll('.tab-btn');
       buttons.forEach((btn, index) => {
         if (index === dayNum - 1) {
@@ -891,18 +302,25 @@
           btn.classList.remove('active');
         }
       });
-
-      const contents = document.querySelectorAll('.day-content');
-      contents.forEach(content => {
-        content.classList.remove('active');
-      });
-      const activeContent = document.getElementById(`day-${dayNum}`);
-      if (activeContent) {
-        activeContent.classList.add('active');
-      }
-
       buttons[dayNum - 1].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+
+      // 2. 非同步載入對應天的 HTML 片段
+      const container = document.getElementById('content-container');
+      try {
+        const response = await fetch(`day${dayNum}.html`);
+        if (!response.ok) throw new Error('Network error');
+        const html = await response.text();
+        container.innerHTML = html;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } catch (err) {
+        container.innerHTML = `<div style="text-align:center; padding: 40px; color: #ef4444;">載入失敗，請確認 day${dayNum}.html 是否存在，或使用 Local Web Server (如 Live Server) 瀏覽。</div>`;
+      }
     }
+
+    // 頁面初次載入預設顯示 Day 1
+    document.addEventListener('DOMContentLoaded', () => {
+      loadDay(1);
+    });
   </script>
 
 </body>
