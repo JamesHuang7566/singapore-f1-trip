@@ -6,7 +6,7 @@
       <span>💰</span> 兩人記帳
     </h2>
     <p style="font-size: 0.85rem; color: #64748b; margin-top: 2px;">
-      旅途花費隨手記，自動換算台幣、資料保存在手機裡[cite: 1]
+      旅途花費隨手記，自動換算台幣、資料保存在手機裡
     </p>
   </div>
 
@@ -33,44 +33,44 @@
     </div>
   </div>
 
-  <!-- 兩人記帳主卡片 (100% 復刻原設計) -->
+  <!-- 兩人記帳主卡片 -->
   <div class="card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 18px 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); box-sizing: border-box;">
     
     <!-- 模組子標題 -->
     <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 14px;">
       <span style="display: inline-block; width: 4px; height: 16px; background-color: #e10600; border-radius: 2px;"></span>
       <h3 style="font-size: 1.05rem; font-weight: 800; color: #1e293b; display: flex; align-items: center; gap: 4px;">
-        💰 兩人記帳器[cite: 1]
+        💰 兩人記帳器
       </h3>
     </div>
 
     <!-- 準備的現金總額卡片 (點擊可修改) -->
     <div onclick="editTotalBudget()" style="background: #fef9c3; border: 1px solid #fef08a; border-radius: 10px; padding: 12px 14px; margin-bottom: 14px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; box-sizing: border-box;">
       <div style="font-size: 0.92rem; font-weight: 700; color: #1e293b; display: flex; align-items: center; gap: 6px;">
-        <span>💵</span> 準備的現金總額 S$ <span id="budgetDisplay" style="font-size: 1.15rem; font-weight: 900; color: #0f172a;">1500</span>[cite: 1]
+        <span>💵</span> 準備的現金總額 S$ <span id="budgetDisplay" style="font-size: 1.15rem; font-weight: 900; color: #0f172a;">1500</span>
       </div>
       <span style="font-size: 0.72rem; color: #854d0e; text-decoration: underline;">修改</span>
     </div>
 
     <!-- 項目輸入框 -->
     <div style="margin-bottom: 10px;">
-      <input type="text" id="entryItem" placeholder="項目（例：6002 巴士、亞坤早餐）" style="width: 100%; box-sizing: border-box; padding: 11px 14px; border: 1px solid #e2e8f0; border-radius: 10px; font-size: 0.92rem; background: #f8fafc; color: #1e293b; outline: none;" />[cite: 1]
+      <input type="text" id="entryItem" placeholder="項目（例：亞坤早餐、長榮機票）" style="width: 100%; box-sizing: border-box; padding: 11px 14px; border: 1px solid #e2e8f0; border-radius: 10px; font-size: 0.92rem; background: #f8fafc; color: #1e293b; outline: none;" />
     </div>
 
     <!-- 金額輸入框 + 記一筆按鈕 -->
     <div style="display: flex; gap: 8px; margin-bottom: 12px;">
       <div style="flex: 1; position: relative;">
-        <input type="number" id="entryAmount" step="0.1" placeholder="金額 S$" style="width: 100%; box-sizing: border-box; padding: 11px 14px; border: 1px solid #e2e8f0; border-radius: 10px; font-size: 0.95rem; font-weight: 600; background: #f8fafc; color: #1e293b; outline: none;" />[cite: 1]
+        <input type="number" id="entryAmount" step="0.1" placeholder="金額 S$" style="width: 100%; box-sizing: border-box; padding: 11px 14px; border: 1px solid #e2e8f0; border-radius: 10px; font-size: 0.95rem; font-weight: 600; background: #f8fafc; color: #1e293b; outline: none;" />
       </div>
       <button onclick="addEntry()" style="background: #18181b; color: #fff; border: none; padding: 0 18px; border-radius: 10px; font-size: 0.92rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 4px; white-space: nowrap;">
-        ＋ 記一筆[cite: 1]
+        ＋ 記一筆
       </button>
     </div>
 
     <!-- 人員選擇 ＆ 付款方式標籤群 -->
     <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 20px;">
       
-      <!-- 人員切換 (Cecilia / James 風格膠囊鈕) -->
+      <!-- 人員切換 (老公 / 老婆) -->
       <div style="display: flex; background: #f1f5f9; padding: 2px; border-radius: 8px; border: 1px solid #e2e8f0;">
         <button id="personBtn1" onclick="setPerson('老公')" style="padding: 6px 14px; border: none; border-radius: 6px; font-size: 0.82rem; font-weight: 700; cursor: pointer; background: #dc2626; color: #fff;">
           老公
@@ -83,46 +83,64 @@
       <!-- 付款方式切換 (現金 / 信用卡) -->
       <div style="display: flex; background: #f1f5f9; padding: 2px; border-radius: 8px; border: 1px solid #e2e8f0;">
         <button id="payCashBtn" onclick="setPayment('現金')" style="padding: 6px 12px; border: none; border-radius: 6px; font-size: 0.82rem; font-weight: 700; cursor: pointer; background: #18181b; color: #fff;">
-          💵 現金[cite: 1]
+          💵 現金
         </button>
         <button id="payCardBtn" onclick="setPayment('信用卡')" style="padding: 6px 12px; border: none; border-radius: 6px; font-size: 0.82rem; font-weight: 700; cursor: pointer; background: transparent; color: #64748b;">
-          💳 信用卡[cite: 1]
+          💳 信用卡
         </button>
       </div>
 
     </div>
 
     <!-- 記帳明細列表容器 -->
-    <div id="entriesList" style="margin-bottom: 20px;"></div>
+    <div id="entriesList" style="margin-bottom: 12px;"></div>
+
+    <!-- 新增：帳目小結 (Total Summary Box) -->
+    <div id="totalSummaryBox" style="display: none; background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 10px; padding: 12px 14px; margin-bottom: 20px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 8px; margin-bottom: 8px;">
+        <span style="font-size: 0.88rem; font-weight: 800; color: #1e293b; display: flex; align-items: center; gap: 4px;">
+          📊 累計支出小結 (Total)
+        </span>
+        <div style="text-align: right;">
+          <span id="grandTotalSgd" style="font-size: 1.05rem; font-weight: 900; color: #e10600;">S$ 0.0</span>
+          <span id="grandTotalTwd" style="font-size: 0.76rem; font-weight: 600; color: #64748b; margin-left: 2px;">(≈NT$0)</span>
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-size: 0.76rem; color: #475569;">
+        <div>💵 現金支出: <strong id="subCashSpent" style="color: #0f172a;">S$ 0.0</strong></div>
+        <div>💳 刷卡支出: <strong id="subCardSpent" style="color: #0f172a;">S$ 0.0</strong></div>
+        <div>👤 老公累計: <strong id="subPerson1Spent" style="color: #0f172a;">S$ 0.0</strong></div>
+        <div>👤 老婆累計: <strong id="subPerson2Spent" style="color: #0f172a;">S$ 0.0</strong></div>
+      </div>
+    </div>
 
     <!-- 深色結算狀態列看板 (現金剩餘與刷卡總額) -->
     <div style="background: #18181b; color: #ffffff; border-radius: 12px; padding: 14px 16px; margin-bottom: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); box-sizing: border-box;">
       <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 4px;">
         <div style="font-size: 0.95rem; font-weight: 800; display: flex; align-items: center; gap: 6px;">
-          <span>💰</span> 現金剩餘 S$ <span id="cashRemainDisplay">0.0</span>[cite: 1]
-          <span style="font-size: 0.82rem; color: #a1a1aa; font-weight: 600;" id="cashRemainTwdDisplay">(≈NT$0)</span>[cite: 1]
+          <span>💰</span> 現金剩餘 S$ <span id="cashRemainDisplay">0.0</span>
+          <span style="font-size: 0.82rem; color: #a1a1aa; font-weight: 600;" id="cashRemainTwdDisplay">(≈NT$0)</span>
         </div>
       </div>
       <div style="font-size: 0.75rem; color: #a1a1aa; margin-top: 6px; display: flex; justify-content: space-between;">
-        <span>💳 信用卡刷卡總額: S$ <span id="cardTotalDisplay">0.0</span> <span id="cardTotalTwdDisplay">(≈NT$0)</span></span>[cite: 1]
+        <span>💳 信用卡刷卡總額: S$ <span id="cardTotalDisplay">0.0</span> <span id="cardTotalTwdDisplay">(≈NT$0)</span></span>
       </div>
     </div>
 
     <!-- 匯出帳目 CSV 按鈕 -->
     <button onclick="exportToCSV()" style="width: 100%; box-sizing: border-box; background: #ffffff; color: #18181b; border: 1.5px solid #18181b; padding: 12px; border-radius: 10px; font-size: 0.95rem; font-weight: 800; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
-      ⬇️ 匯出帳目 (CSV)[cite: 1]
+      ⬇️ 匯出帳目 (CSV)
     </button>
 
   </div>
 
   <!-- 底部備註警語 -->
   <p style="font-size: 0.74rem; color: #94a3b8; line-height: 1.5; padding: 0 4px;">
-    * 資料自動保存在這支手機的瀏覽器裡（Safari/Chrome 開啟時有效）。台幣換算使用上方的即時匯率。匯出的 CSV 可用 Excel / Google Sheet / Numbers 開啟，也可存檔備份或分享給同行者。[cite: 1]
+    * 資料自動保存在這支手機的瀏覽器裡（Safari/Chrome 開啟時有效）。台幣換算使用上方的即時匯率。匯出的 CSV 可用 Excel / Google Sheet / Numbers 開啟，也可存檔備份或分享給同行者。
   </p>
 
 </div>
 
-<!-- 所有的核心腳本「100% 寫在 account.html 裡面」！ -->
 <script>
   (function() {
     let currentPerson = '老公';
@@ -306,7 +324,7 @@
       `).join('');
     }
 
-    // 計算剩餘現金與信用卡總計
+    // 計算剩餘現金、信用卡總計、以及「帳目小結 (Total)」
     function updateCalculations() {
       const entries = getEntries();
       const budget = parseFloat(localStorage.getItem('f1_trip_cash_budget') || '1500');
@@ -314,6 +332,8 @@
 
       let cashSpent = 0;
       let cardSpent = 0;
+      let person1Spent = 0;
+      let person2Spent = 0;
 
       entries.forEach(e => {
         if (e.payment === '現金') {
@@ -321,8 +341,33 @@
         } else {
           cardSpent += e.amount;
         }
+
+        if (e.person === '老公') {
+          person1Spent += e.amount;
+        } else {
+          person2Spent += e.amount;
+        }
       });
 
+      const grandTotal = cashSpent + cardSpent;
+
+      // 更新「小結 Total」區塊
+      const summaryBox = document.getElementById('totalSummaryBox');
+      if (summaryBox) {
+        if (entries.length > 0) {
+          summaryBox.style.display = 'block';
+          document.getElementById('grandTotalSgd').innerText = `S$ ${grandTotal.toFixed(1)}`;
+          document.getElementById('grandTotalTwd').innerText = `(≈NT$${Math.round(grandTotal * rate).toLocaleString()})`;
+          document.getElementById('subCashSpent').innerText = `S$ ${cashSpent.toFixed(1)}`;
+          document.getElementById('subCardSpent').innerText = `S$ ${cardSpent.toFixed(1)}`;
+          document.getElementById('subPerson1Spent').innerText = `S$ ${person1Spent.toFixed(1)}`;
+          document.getElementById('subPerson2Spent').innerText = `S$ ${person2Spent.toFixed(1)}`;
+        } else {
+          summaryBox.style.display = 'none';
+        }
+      }
+
+      // 更新深色狀態看板
       const cashRemain = budget - cashSpent;
       const cashRemainEl = document.getElementById('cashRemainDisplay');
       const cashRemainTwdEl = document.getElementById('cashRemainTwdDisplay');
