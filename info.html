@@ -1,23 +1,34 @@
 <div class="info-wrapper" style="display: flex; flex-direction: column; gap: 16px;">
 
-  <!-- 新增：天氣資訊與穿衣建議 -->
+  <!-- 即時自動擷取：新加坡最新天氣與穿衣指南 -->
   <div class="card" style="border-left: 4px solid #f59e0b; background: #fffdfa;">
-    <span class="card-time" style="background: #fef3c7; color: #b45309;">WEATHER & DRESS CODE</span>
-    <h2 class="card-title">☀️ 天氣資訊 ＆ 穿衣防護指南</h2>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+      <span class="card-time" style="background: #fef3c7; color: #b45309; margin-bottom: 0;">LIVE WEATHER & TIPS</span>
+      <span id="weather-update-time" style="font-size: 0.7rem; color: #a16207;">連線更新中...</span>
+    </div>
+    
+    <h2 class="card-title">☀️ 新加坡即時天氣 ＆ 穿衣防護指南</h2>
     <div class="card-content">
       
-      <!-- 氣溫看板 -->
+      <!-- 動態即時氣候看板 -->
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; text-align: center;">
-        <div style="background: #fff; border: 1px solid #fde68a; border-radius: 8px; padding: 8px;">
-          <div style="font-size: 0.75rem; color: #92400e;">白天中午至傍晚</div>
-          <div style="font-size: 1.15rem; font-weight: 800; color: #b45309;">31°C - 32°C</div>
-          <div style="font-size: 0.7rem; color: #a16207;">體感約 35°C・紫外線強</div>
+        
+        <!-- 當下即時實測 -->
+        <div style="background: #fff; border: 1px solid #fde68a; border-radius: 8px; padding: 10px 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+          <div style="font-size: 0.75rem; color: #92400e; font-weight: 600;">當前即時實測</div>
+          <div id="live-temp" style="font-size: 1.45rem; font-weight: 900; color: #b45309; line-height: 1.3; margin: 2px 0;">--°C</div>
+          <div id="live-condition" style="font-size: 0.75rem; color: #a16207; font-weight: 700;">📡 載入中...</div>
+          <div id="live-apparent" style="font-size: 0.68rem; color: #78350f; margin-top: 2px;">體感 --°C</div>
         </div>
-        <div style="background: #fff; border: 1px solid #fde68a; border-radius: 8px; padding: 8px;">
-          <div style="font-size: 0.75rem; color: #92400e;">夜間賽事期間</div>
-          <div style="font-size: 1.15rem; font-weight: 800; color: #0284c7;">27°C - 29°C</div>
-          <div style="font-size: 0.7rem; color: #0369a1;">濕度 75-85%・像大蒸籠</div>
+
+        <!-- 濕度與降雨機率 -->
+        <div style="background: #fff; border: 1px solid #fde68a; border-radius: 8px; padding: 10px 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.03); display: flex; flex-direction: column; justify-content: center;">
+          <div style="font-size: 0.75rem; color: #92400e; font-weight: 600;">大氣濕度 / 降雨率</div>
+          <div id="live-humidity" style="font-size: 1.25rem; font-weight: 800; color: #0284c7; margin: 2px 0;">-- %</div>
+          <div id="live-rain-prob" style="font-size: 0.72rem; color: #0369a1; font-weight: 600;">今日降雨機率: --%</div>
+          <div style="font-size: 0.68rem; color: #64748b; margin-top: 2px;">典型熱帶海洋氣候</div>
         </div>
+
       </div>
 
       <p><strong>👔 穿著建議：</strong></p>
@@ -101,3 +112,91 @@
   </div>
 
 </div>
+
+<!-- 即時天氣抓取腳本 (每次載入自動連線最新氣象) -->
+<script>
+  (async function fetchSingaporeWeather() {
+    const wmoMap = {
+      0: "☀️ 晴朗無雲",
+      1: "🌤️ 大致多雲",
+      2: "⛅ 多雲有陽光",
+      3: "☁️ 陰天多雲",
+      45: "🌫️ 局部有霧",
+      48: "🌫️ 薄霧瀰漫",
+      51: "🌦️ 輕微毛毛雨",
+      53: "🌦️ 中度細雨",
+      55: "🌧️ 密集毛毛雨",
+      61: "🌧️ 局部短暫雨",
+      63: "🌧️ 中度陣雨",
+      65: "🌧️ 強降雨",
+      80: "🌦️ 局部熱帶雷雨",
+      81: "⛈️ 熱帶短時陣雨",
+      82: "⛈️ 猛烈熱帶豪雨",
+      95: "⚡ 局部雷暴",
+      96: "⛈️ 雷暴伴隨微冰雹",
+      99: "⛈️ 強烈雷暴天氣"
+    };
+
+    try {
+      const url = "https://api.open-meteo.com/v1/forecast?latitude=1.30&longitude=103.85&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code&daily=precipitation_probability_max&timezone=Asia%2FSingapore";
+      
+      const res = await fetch(url);
+      if (!res.ok) throw new Error("Weather API Response Error");
+      const data = await res.json();
+
+      const current = data.current;
+      const daily = data.daily;
+
+      // 1. 當前實測溫度
+      const tempEl = document.getElementById("live-temp");
+      if (tempEl) tempEl.innerText = `${Math.round(current.temperature_2m)}°C`;
+
+      // 2. 當前天氣狀況
+      const conditionEl = document.getElementById("live-condition");
+      if (conditionEl) {
+        conditionEl.innerText = wmoMap[current.weather_code] || "🌤️ 多雲熱帶氣候";
+      }
+
+      // 3. 體感溫度
+      const apparentEl = document.getElementById("live-apparent");
+      if (apparentEl) {
+        apparentEl.innerText = `體感約 ${Math.round(current.apparent_temperature)}°C`;
+      }
+
+      // 4. 大氣相對濕度
+      const humidityEl = document.getElementById("live-humidity");
+      if (humidityEl) {
+        humidityEl.innerText = `${current.relative_humidity_2m}%`;
+      }
+
+      // 5. 今日最高降雨機率
+      const rainProbEl = document.getElementById("live-rain-prob");
+      if (rainProbEl && daily && daily.precipitation_probability_max) {
+        rainProbEl.innerText = `今日降雨機率: ${daily.precipitation_probability_max[0]}%`;
+      }
+
+      // 6. 更新時間戳記
+      const timeEl = document.getElementById("weather-update-time");
+      if (timeEl) {
+        const now = new Date();
+        const timeStr = now.toLocaleTimeString("zh-TW", { hour: "2-digit", minute: "2-digit" });
+        timeEl.innerText = `即時連線 (${timeStr} 更新)`;
+      }
+
+    } catch (err) {
+      console.warn("無法取得即時天氣，使用典型熱帶氣候均值替代", err);
+      const conditionEl = document.getElementById("live-condition");
+      if (conditionEl) conditionEl.innerText = "🌤️ 熱帶多雲 (離線)";
+      const tempEl = document.getElementById("live-temp");
+      if (tempEl) tempEl.innerText = "30°C";
+      const apparentEl = document.getElementById("live-apparent");
+      if (apparentEl) apparentEl.innerText = "體感約 34°C";
+      const humidityEl = document.getElementById("live-humidity");
+      if (humidityEl) humidityEl.innerText = "78%";
+      const rainProbEl = document.getElementById("live-rain-prob");
+      if (rainProbEl) rainProbEl.innerText = "熱帶午後偶陣雨";
+      const timeEl = document.getElementById("weather-update-time");
+      if (timeEl) timeEl.innerText = "離線預設均值";
+    }
+  })();
+</script>
